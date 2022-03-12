@@ -1,13 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Security.Claims;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using TezProjesi.Authentication;
 using TezProjesi.Models;
@@ -57,13 +48,6 @@ namespace TezProjesi.Controllers
             if (loginResponse.IsLoggedIn)
             {
                 return RedirectToAction("Index", "User");
-
-
-
-
-
-
-
             }
             else
             {

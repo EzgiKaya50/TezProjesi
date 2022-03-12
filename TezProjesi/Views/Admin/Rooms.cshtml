@@ -1,0 +1,67 @@
+﻿@model TezProjesi.CustomModels.RoomModels.RoomPage
+@{
+    ViewData["Title"] = "Rooms";
+    Layout = "~/Views/Shared/_Layout_admin.cshtml";
+}
+<div class="row">
+    <div class="col-12 text-right">
+        <div class="col-md-3 float-right">
+            <a href="@Url.Action("OdaEkle","Admin")" class="btn btn-success btn-block mt-3 mb-3" type="button">Oda Ekle</a>
+        </div>
+    </div>
+</div>
+<div class="table-responsive">
+    <table id="Room_table" class="display table table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Hotel</th>
+                <th scope="col">Başlık</th>
+                <th scope="col">Açıklama</th>
+                <th scope="col">Adet</th>
+                <th scope="col">Fiyat</th>
+                <th scope="col">Tür</th>
+                <th scope="col">Fotoğraf</th>
+                <th scope="col" class="text-center">
+                    <span class="small">
+                        <span class="text-success">Düzenle</span> |
+                        <span class="text-danger">Sil</span>
+                    </span>
+                </th>
+            </tr>
+        </thead>
+        @{ var cardIndx = 0; }
+        <tbody>
+            @foreach (var Room in Model.RoomList)
+            {
+                cardIndx++;
+            <tr class="@Room.Id">
+                <th scope="row">@cardIndx</th>
+                <td>@Room.HotelId</td>
+                <td>@Room.Title</td>
+                <td>@Html.Raw(Room.Description)</td>
+                <td>@Room.Adet</td>
+                <td>@Room.Price</td>
+                <td>@Room.Type</td>
+               <td> <img src="~/RoomImg/@Room.Image" height="100" /> </td>
+                <td scope="col" class="text-center">
+                    <a title="Düzenle" href="@Url.Action("OdaGuncelle","Admin",new {RoomId = Room.Id  })" class="text-success">
+                        <i class="fas fa-pen"></i>
+                    </a>
+                    <a title="Sil" class="text-danger" href="@Url.Action("OdaSil","Admin",new {RoomId = Room.Id  })" onclick="return confirm('Silmek istediğinize emin misiniz?')">
+                        <i class="fas fa-ban"></i>
+                    </a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<script>
+    $(function () {
+        $("#Room_table").DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false,
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    });
+</script>
+

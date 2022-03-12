@@ -1,0 +1,70 @@
+﻿@model TezProjesi.CustomModels.RoomModels.RoomPage
+@{
+    ViewData["Title"] = "OdaEkle";
+    Layout = "~/Views/Shared/_Layout_admin.cshtml";
+}
+<script src="~/js/ckeditor/ckeditor.js"></script>
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">Oda Ekle</h3>
+            </div>
+
+            <div class="card-body">
+                @using (Html.BeginForm("OdaKaydet", "Admin", FormMethod.Post, new { @class = "", @enctype = "multipart/form-data" }))
+                {
+                    <div class="col-lg-12 col-md-12">
+                        <div class="form-group">
+                            <label for="Hotel">Otel:</label>
+                            @Html.DropDownListFor(m => m.RoomCRUD.HotelId, new SelectList(Model.HotelList, "Id", "Title"), "Seçiniz..", new { @class = "form-control", @id = "questionDifficulty", @placeholder = "Zorluk", @required = "true" })
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12">
+                        <div class="form-group">
+                            <label for="title">Başlık:</label>
+                            @Html.TextBoxFor(c => c.RoomCRUD.Title, null, new { @class = "form-control", @id = "title", @placeholder = "Başlık", @required = "true", @maxlenght = "50" })
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12">
+                        <div class="form-group">
+                            <label for="Description">Açıklama:</label>
+                            @Html.TextAreaFor(c => c.RoomCRUD.Description, new { @class = "form-control", @id = "Description", @placeholder = "Açıklama", @required = "true", @maxlenght = "50" })
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12">
+                        <div class="form-group">
+                            <label for="Adet">Adet:</label>
+                            @Html.TextBoxFor(c => c.RoomCRUD.Adet, null, new { @class = "form-control", @id = "Adet", @placeholder = "Adet", @type="number", @required = "true", @maxlenght = "50" })
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12">
+                        <div class="form-group">
+                            <label for="Price">Fiyat:</label>
+                            @Html.TextBoxFor(c => c.RoomCRUD.Price, new { @class = "form-control", @id = "Price", @placeholder = "Fiyat", @type="number", @required = "true", @maxlenght = "50" })
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12">
+                        <div class="form-group">
+                            <label for="Type">Tür:</label>
+                            @Html.DropDownListFor(c => c.RoomCRUD.Type, new SelectList(Model.RoomType.Type, "Value", "Text"), new { @class = "form-control", @id = "Type", @placeholder = "Tür", @required = "true", @maxlenght = "50" })
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12">
+                        <div class="form-group">
+                            <label for="Image">Resim:</label>
+                            <input type="file" id="file" name="RoomImage" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-2"><button type="submit" class="btn btn-success btn-block">Kaydet</button></div>
+                }
+            </div>
+        </div>
+    </div>
+
+</section>
+<script src="~/js/ckeditor/ckeditor.js"></script>
+
+<script>
+    CKEDITOR.replace("Description");
+</script>

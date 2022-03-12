@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,12 +21,19 @@ namespace TezProjesi.Controllers
         }
         public IActionResult Index()
         {
-            if(HttpContext.User.Identity.IsAuthenticated == true)
+            HomePageModels model = new HomePageModels();
+            model.FaqList = _context.Faq.Where(c => c.Status == true).ToList();
+            model.HotelList = _context.Hotel.Where(c => c.Status == true).ToList();
+            model.CommentList = _context.Comment.Where(c => c.Status == true).ToList();
+            model.RoomList = _context.Room.Where(c => c.Status == true).ToList();
+
+            if (HttpContext.User.Identity.IsAuthenticated == true)
             {
                 var claimsIdentity = HttpContext.User.Identity as ClaimsIdentity;
                 var userName = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+               
             }
-               return View();
+               return View(model);
         }
         public IActionResult Kaydol(string message)
         {
@@ -60,6 +69,19 @@ namespace TezProjesi.Controllers
             return View();
         }
         public ActionResult Oteller()
+        {
+            return View();
+        }
+        public async Task<IActionResult> CikisYapUser()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Index", "User");
+        }
+        public ActionResult Profil()
+        {
+            return View();
+        }
+        public ActionResult Randevularım()
         {
             return View();
         }
