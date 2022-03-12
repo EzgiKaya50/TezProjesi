@@ -57,6 +57,13 @@ namespace TezProjesi.Controllers
             if (loginResponse.IsLoggedIn)
             {
                 return RedirectToAction("Index", "User");
+
+
+
+
+
+
+
             }
             else
             {
