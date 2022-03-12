@@ -1,0 +1,38 @@
+﻿@model TezProjesi.CustomModels.FaqModels.FaqPage;
+@{
+    ViewData["Title"] = "SoruGuncelle";
+    Layout = "~/Views/Shared/_Layout_admin.cshtml";
+}
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">Otel Guncelle</h3>
+            </div>
+
+            <div class="card-body">
+                @using (Html.BeginForm("SoruGuncelleKaydet", "Admin", FormMethod.Post, new { @class = "", @enctype = "multipart/form-data" }))
+                {
+                    @Html.HiddenFor(m => m.FaqCRUD.Id)
+                    <div class="col-lg-12 col-md-12">
+                        <div class="form-group">
+                            <label for="Quesstion">Soru:</label>
+                            @Html.TextBoxFor(c => c.FaqCRUD.Question, null, new { @class = "form-control", @id = "Question", @placeholder = "Soru", @required = "true", @maxlenght = "50" })
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12">
+                        <div class="form-group">
+                            <label for="Answer">Cevap:</label>
+                            @Html.TextBoxFor(c => c.FaqCRUD.Answer, null, new { @class = "form-control", @id = "Answer", @placeholder = "Cevap", @required = "true", @maxlenght = "50" })
+                        </div>
+                    </div>
+                    <div class="col-md-2"><button type="submit" class="btn btn-success btn-block">Kaydet</button></div>
+                }
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+

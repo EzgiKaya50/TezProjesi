@@ -1,0 +1,142 @@
+﻿@model TezProjesi.CustomModels.SettingModels.SettingPage
+@{
+    ViewData["Title"] = "YeniAyarEkle";
+    Layout = "~/Views/Shared/_Layout_admin.cshtml";
+}
+<script src="~/js/ckeditor/ckeditor.js"></script>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">Yeni Ayar Ekle</h3>
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    @using (Html.BeginForm("AyarKaydet", "Admin", FormMethod.Post, new { @class = "form-horizontal row-fluid", @enctype = "multipart/form-data" }))
+                    {
+                        <div class="col-lg-12 col-md-6">
+                            <div class="form-group">
+                                <label for="company">Şirket</label>
+                                @Html.DropDownListFor(m => m.SettingCRUD.Company, new SelectList(Model.HotelList, "Id", "Title"), "Seçiniz..", new { @class = "form-control", @id = "questionDifficulty", @placeholder = "Zorluk", @required = "true" })
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-6">
+                            <div class="form-group">
+                                <label for="title">Başlık:</label>
+                                @Html.TextBoxFor(c => c.SettingCRUD.Title, null, new { @class = "form-control", @id = "title", @placeholder = "Başlık", @required = "true", @maxlenght = "50" })
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-6">
+                            <div class="form-group">
+                                <label for="Keywords">Anahtar Kelime:</label>
+                                @Html.TextBoxFor(c => c.SettingCRUD.Keywords, null, new { @class = "form-control", @id = "keywords", @placeholder = "Anahtar Kelime", @required = "true", @maxlenght = "50" })
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-6">
+                            <div class="form-group">
+                                <label for="Description">Açıklama:</label>
+                                @Html.TextAreaFor(c => c.SettingCRUD.Description, new { @class = "form-control", @id = "Description", @placeholder = "Açıklama", @required = "true", @maxlenght = "50" })
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-6">
+                            <div class="form-group">
+                                <label for="Address">Adres:</label>
+                                @Html.TextBoxFor(c => c.SettingCRUD.Adress, null, new { @class = "form-control", @id = "Address", @placeholder = "Adres", @required = "true", @maxlenght = "50" })
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-6">
+                            <div class="form-group">
+                                <label for="Phone">Telefon:</label>
+                                @Html.TextBoxFor(c => c.SettingCRUD.Phone, null, new { @class = "form-control", @id = "Phone", @placeholder = "Telefon", @required = "true", @maxlenght = "50" })
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-6">
+                            <div class="form-group">
+                                <label for="Fax">Fax:</label>
+                                @Html.TextBoxFor(c => c.SettingCRUD.Fax, null, new { @class = "form-control", @id = "Fax", @placeholder = "Fax", @required = "true", @maxlenght = "50" })
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-6">
+                            <div class="form-group">
+                                <label for="Email">E-Mail:</label>
+                                @Html.TextBoxFor(c => c.SettingCRUD.Email, null, new { @class = "form-control", @id = "Email", @placeholder = "E-mail", @required = "true", @maxlenght = "50" })
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-6">
+                            <div class="form-group">
+                                <label for="Smtpserver">Smtpserver:</label>
+                                @Html.TextBoxFor(c => c.SettingCRUD.Smtpserver, null, new { @class = "form-control", @id = "Smtpserver", @placeholder = "Smtpser", @required = "true", @maxlenght = "50" })
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-6">
+                            <div class="form-group">
+                                <label for="Smtpemail">Smtpemail:</label>
+                                @Html.TextBoxFor(c => c.SettingCRUD.Smtpemail, null, new { @class = "form-control", @id = "Smtpemail", @placeholder = "Smtpemail", @required = "true", @maxlenght = "50" })
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-6">
+                            <div class="form-group">
+                                <label for="Smtppasword">Smtppassword:</label>
+                                @Html.TextBoxFor(c => c.SettingCRUD.Smtppassword, null, new { @class = "form-control", @id = "Smtppassword", @placeholder = "Smtppassword", @required = "true", @maxlenght = "50" })
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-6">
+                            <div class="form-group">
+                                <label for="Smtpport">Smtpport:</label>
+                                @Html.TextBoxFor(c => c.SettingCRUD.Smtpport, null, new { @class = "form-control", @id = "Smtpport", @placeholder = "Smtpport", @required = "true", @maxlenght = "50" })
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-6">
+                            <div class="form-group">
+                                <label for="Facebook">Facebook:</label>
+                                @Html.TextBoxFor(c => c.SettingCRUD.Facebook, null, new { @class = "form-control", @id = "Facebook", @placeholder = "Facebook", @required = "true", @maxlenght = "50" })
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-6">
+                            <div class="form-group">
+                                <label for="Instagram">Instagram:</label>
+                                @Html.TextBoxFor(c => c.SettingCRUD.Instagram, null, new { @class = "form-control", @id = "Instagram", @placeholder = "Instagram", @required = "true", @maxlenght = "50" })
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-6">
+                            <div class="form-group">
+                                <label for="Twitter">Twitter:</label>
+                                @Html.TextBoxFor(c => c.SettingCRUD.Twitter, null, new { @class = "form-control", @id = "Twitter", @placeholder = "Twitter", @required = "true", @maxlenght = "50" })
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-6">
+                            <div class="form-group">
+                                <label for="Abouts">Hakkında:</label>
+                                @Html.TextAreaFor(c => c.SettingCRUD.Aboutus, new { @class = "form-control", @id = "Abouts", @placeholder = "Hakkında", @required = "true", @maxlenght = "50" })
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-6">
+                            <div class="form-group">
+                                <label for="Contact">İletişim:</label>
+                                @Html.TextBoxFor(c => c.SettingCRUD.Contact, null, new { @class = "form-control", @id = "Contact", @placeholder = "İletişim", @required = "true", @maxlenght = "50" })
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-6">
+                            <div class="form-group">
+                                <label for="Reference">Referans:</label>
+                                @Html.TextBoxFor(c => c.SettingCRUD.Referencs, null, new { @class = "form-control", @id = "Reference", @placeholder = "Referans", @required = "true", @maxlenght = "50" })
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success btn-user btn-block">Kaydet</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+<script src="~/js/ckeditor/ckeditor.js"></script>
+
+<script>
+    CKEDITOR.replace("aboutus");
+    CKEDITOR.replace("Description");
+</script>
+

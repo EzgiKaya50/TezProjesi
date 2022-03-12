@@ -1,0 +1,44 @@
+﻿@model TezProjesi.CustomModels.CommentModels.CommentPage
+@{
+    ViewData["Title"] = "Comments";
+    Layout = "~/Views/Shared/_Layout_admin.cshtml";
+}
+<div class="table-responsive">
+    <table id="Comment_table" class="display table table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">IP</th>
+                <th scope="col">Yorum</th>
+                <th scope="col">Otel</th>
+                <th scope="col">Kullanıcı</th>
+                <th scope="col">Puan</th>
+            </tr>
+        </thead>
+        @{ var cardIndx = 0; }
+        <tbody>
+            @foreach (var Comment in Model.CommentList)
+            {
+                cardIndx++;
+                <tr class="@Comment.Id">
+                    <th scope="row">@cardIndx</th>
+                    <td>@Comment.Ip</td>
+                    <td>@Comment.Comment1</td>
+                    <td>@Comment.HotelId</td>
+                    <td>@Comment.UserId</td>
+                    <td>@Comment.Rate</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<script>
+    $(function () {
+        $("#Comment_table").DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false,
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    });
+</script>
+
+
+

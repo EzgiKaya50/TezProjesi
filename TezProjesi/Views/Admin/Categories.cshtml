@@ -1,0 +1,62 @@
+﻿@model TezProjesi.CustomModels.CategoryModels.YeniKategoriEklePage
+@{
+    ViewData["Title"] = "Categories";
+    Layout = "~/Views/Shared/_Layout_admin.cshtml";
+}
+<div class="row">
+    <div class="col-12 text-right">
+        <div class="col-md-3 float-right">
+            <a href="@Url.Action("YeniKategoriEkle","Admin")" class="btn btn-success btn-block mt-3 mb-3" type="button">Yeni Kategori Ekle</a>
+        </div>
+    </div>
+</div>
+
+
+<div class="table-responsive">
+    <table id="Category_table" class="display table table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">ParentID</th>
+                <th scope="col">Başlık</th>
+                <th scope="col">Anahtar Kelimeler</th>
+                <th scope="col">Tanım</th>
+                <th scope="col" class="text-center">
+                    <span class="small">
+                        <span class="text-success">Düzenle</span> |
+                        <span class="text-danger">Sil</span>
+                    </span>
+                </th>
+            </tr>
+        </thead>
+        @{ var cardIndx = 0; }
+        <tbody>
+            @foreach (var Category in Model.CategoryList)
+            {
+                cardIndx++;
+            <tr class="@Category.Id">
+                <th scope="row">@cardIndx</th>
+                <td>@Category.Parentid</td>
+                <td>@Category.Title</td>
+                <td>@Category.Keywords</td>
+                <td>@Html.Raw(Category.Description)</td>
+                <td scope="col" class="text-center">
+                    <a title="Düzenle" href="@Url.Action("KategoriGuncelle","Admin",new {categoryId = Category.Id  })" class="text-success">
+                        <i class="fas fa-pen"></i>
+                    </a>
+                    <a title="Sil" class="text-danger" href="@Url.Action("KategoriSil","Admin",new {categoryId = Category.Id  })" onclick="return confirm('Silmek istediğinize emin misiniz?')">
+                        <i class="fas fa-ban"></i>
+                    </a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<script>
+        $(function () {
+            $("#Category_table").DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": false,
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+  });
+</script>

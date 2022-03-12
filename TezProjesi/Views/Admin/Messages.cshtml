@@ -1,0 +1,44 @@
+﻿@model TezProjesi.CustomModels.MessageModels.MessagePage
+@{
+    ViewData["Title"] = "Messages";
+    Layout = "~/Views/Shared/_Layout_admin.cshtml";
+}
+<div class="table-responsive">
+    <table id="Message_table" class="display table table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">İsim</th>
+                <th scope="col">E-mail</th>
+                <th scope="col">Telefon Numarası</th>
+                <th scope="col">Konu</th>
+                <th scope="col">Mesaj</th>
+                <th scope="col">IP</th>
+            </tr>
+        </thead>
+        @{ var cardIndx = 0; }
+        <tbody>
+            @foreach (var Message in Model.MessageList )
+                {
+                    cardIndx++;
+            <tr class="@Message.Id">
+                <th scope="row">@cardIndx</th>
+                <td>@Message.Name</td>
+                <td>@Message.Email</td>
+                <td>@Message.Phone</td>
+                <td>@Message.Subject</td>
+                <td>@Message.Message1</td>
+                <td>@Message.Ip</td>
+            </tr>
+                }
+        </tbody>
+    </table>
+</div>
+<script>
+    $(function () {
+        $("#Message_table").DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false,
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    });
+</script>
+

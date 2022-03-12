@@ -1,0 +1,58 @@
+﻿@model TezProjesi.CustomModels.FaqModels.FaqPage
+@{
+    ViewData["Title"] = "FAQ";
+    Layout = "~/Views/Shared/_Layout_admin.cshtml";
+}
+<div class="row">
+    <div class="col-12 text-right">
+        <div class="col-md-3 float-right">
+            <a href="@Url.Action("SoruEkle","Admin")" class="btn btn-success btn-block mt-3 mb-3" type="button">Soru Ekle</a>
+        </div>
+    </div>
+</div>
+<div class="table-responsive">
+    <table id="Faq_table" class="display table table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Soru</th>
+                <th scope="col">Cevap</th>
+                <th scope="col" class="text-center">
+                    <span class="small">
+                        <span class="text-success">Düzenle</span> |
+                        <span class="text-danger">Sil</span>
+                    </span>
+                </th>
+            </tr>
+        </thead>
+        @{ var cardIndx = 0; }
+    <tbody>
+        @foreach (var Faq in Model.FaqList)
+        {
+            cardIndx++;
+            <tr>
+                <th scope="row">@cardIndx</th>
+                <td>@Faq.Question</td>
+                <td>@Faq.Answer</td>
+                <td scope="col" class="text-center">
+                    <a title="Düzenle" href="@Url.Action("SoruGuncelle","Admin",new {faqId = Faq.Id  })" class="text-success">
+                        <i class="fas fa-pen"></i>
+                    </a>
+                    <a title="Sil" class="text-danger" href="@Url.Action("SoruSil","Admin",new {faqId = Faq.Id  })" onclick="return confirm('Silmek istediğinize emin misiniz?')">
+                        <i class="fas fa-ban"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+</table>
+    </div>
+    <script>
+        $(function () {
+            $("#Faq_table").DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": false,
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        });
+    </script>
+
+
+

@@ -1,0 +1,113 @@
+﻿@model TezProjesi.CustomModels.HotelModels.HotelPage
+@{
+    ViewData["Title"] = "YeniOtelEkle";
+    Layout = "~/Views/Shared/_Layout_admin.cshtml";
+}
+<script src="~/js/ckeditor/ckeditor.js"></script>
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">Yeni Otel Ekle</h3>
+            </div>
+
+            <div class="card-body">
+                @using (Html.BeginForm("OtelKaydet", "Admin", FormMethod.Post, new { @class = "", @enctype = "multipart/form-data" }))
+                {
+                    <div class="col-lg-12 col-md-12">
+                        <div class="form-group">
+                            <label for="Category">Kategori:</label>
+                            @Html.DropDownListFor(m => m.HotelCRUD.CategoryId, new SelectList(Model.CategoryList, "Id", "Title"), "Seçiniz..", new { @class = "form-control", @id = "questionDifficulty", @placeholder = "Zorluk", @required = "true" })
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12">
+                        <div class="form-group">
+                            <label for="title">Başlık:</label>
+                            @Html.TextBoxFor(c => c.HotelCRUD.Title, null, new { @class = "form-control", @id = "title", @placeholder = "Başlık", @required = "true", @maxlenght = "50" })
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12">
+                        <div class="form-group">
+                            <label for="Description">Açıklama:</label>
+                            @Html.TextAreaFor(c => c.HotelCRUD.Description, new { @class = "form-control", @id = "Description", @placeholder = "Açıklama", @required = "true", @maxlenght = "50" })
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12">
+                        <div class="form-group">
+                            <label for="Keywords">Anahtar Kelime:</label>
+                            @Html.TextBoxFor(c => c.HotelCRUD.Keywords, null, new { @class = "form-control", @id = "Keywords", @placeholder = "Anahtar kelime", @required = "true", @maxlenght = "50" })
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12">
+                        <div class="form-group">
+                            <label for="Detail">Detay:</label>
+                            @Html.TextAreaFor(c => c.HotelCRUD.Detail, new { @class = "form-control", @id = "Detail", @placeholder = "Detay", @required = "true", @maxlenght = "50" })
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12">
+                        <div class="form-group">
+                            <label for="Star">Yıldız:</label>
+                            @Html.TextBoxFor(c => c.HotelCRUD.Star, null, new { @class = "form-control", @id = "Star", @placeholder = "Yıldız", @required = "true", @maxlenght = "50" })
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12">
+                        <div class="form-group">
+                            <label for="Addres">Adres:</label>
+                            @Html.TextBoxFor(c => c.HotelCRUD.Address, null, new { @class = "form-control", @id = "Address", @placeholder = "Adres", @required = "true", @maxlenght = "50" })
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12">
+                        <div class="form-group">
+                            <label for="Phone">Telefon Numarası:</label>
+                            @Html.TextBoxFor(c => c.HotelCRUD.Phone, null, new { @class = "form-control", @id = "Phone", @placeholder = "Telefon Numarası", @required = "true", @maxlenght = "50" })
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12">
+                        <div class="form-group">
+                            <label for="Fax">Fax:</label>
+                            @Html.TextBoxFor(c => c.HotelCRUD.Fax, null, new { @class = "form-control", @id = "Fax", @placeholder = "Fax", @required = "true", @maxlenght = "50" })
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12">
+                        <div class="form-group">
+                            <label for="Email">Email:</label>
+                            @Html.TextBoxFor(c => c.HotelCRUD.Email, null, new { @class = "form-control", @id = "E-mail", @placeholder = "E-mail", @required = "true", @maxlenght = "50" })
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12">
+                        <div class="form-group">
+                            <label for="City">Şehir:</label>
+                            @Html.TextBoxFor(c => c.HotelCRUD.City, null, new { @class = "form-control", @id = "City", @placeholder = "Şehir", @required = "true", @maxlenght = "50" })
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12">
+                        <div class="form-group">
+                            <label for="Country">Ülke:</label>
+                            @Html.TextBoxFor(c => c.HotelCRUD.Country, null, new { @class = "form-control", @id = "Country", @placeholder = "Ülke", @required = "true", @maxlenght = "50" })
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12">
+                        <div class="form-group">
+                            <label for="Location">Konum:</label>
+                            @Html.TextBoxFor(c => c.HotelCRUD.Location, null, new { @class = "form-control", @id = "Location", @placeholder = "Konum", @required = "true", @maxlenght = "50" })
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12">
+                        <div class="form-group">
+                            <label for="Image">Resim:</label>
+                            <input type="file" id="file" name="HotelImage" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-2"><button type="submit" class="btn btn-success btn-block">Kaydet</button></div>
+                }
+            </div>
+        </div>
+    </div>
+
+</section>
+<script src="~/js/ckeditor/ckeditor.js"></script>
+
+<script>
+    CKEDITOR.replace("Detail");
+    CKEDITOR.replace("Description");
+</script>
