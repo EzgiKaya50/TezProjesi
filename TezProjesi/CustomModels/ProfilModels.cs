@@ -9,5 +9,6 @@ namespace TezProjesi.CustomModels
     public class ProfilModels
     {
         public User User {get; set;}
+        public Profile Profile { get; set; }
     }
 }

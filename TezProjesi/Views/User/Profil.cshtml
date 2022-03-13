@@ -4,4 +4,71 @@
     Layout = "~/Views/Shared/_Layout_user.cshtml";
 }
 
+<section class="accomodation_area section_gap">
+    <div class="container">
+        <div class="section_title text-center">
+            <h3 class="title_color"><span>Profil</span></h3>
+        </div>
+       <div class="row mb-5" >
+           <div class="col-4">
+               <div class="col-12">
+                   @if (Model.Profile.Image == null)
+                   {
+                       <img src="~/ProfilePictures/default.png" style="height:150px" />
+                   }
+            else
+            {
+               <img src="~/ProfilePictures/@Model.Profile.Image" style="height:150px" />
+
+            }
+
+                   <table class="mt-3">
+                       <tbody>
+                           <tr>
+                               <th>
+                                   İsim :
+                               </th>
+                               <td>
+                                   <span> @Model.User.Name</span>
+                               </td>
+                           </tr>
+                           <tr>
+                               <th>
+                                   Soyisim :
+                               </th>
+                               <td>
+                                   <span> @Model.User.Surname</span>
+                               </td>
+                           </tr>
+                           <tr>
+                               <th>
+                                   E-mail :
+                               </th>
+                               <td>
+                                   <span> @Model.User.Email</span>
+                               </td>
+                           </tr>
+                           <tr>
+                               <th>
+                                   Adres :
+                               </th>
+                               <td>
+                                   <span> @Model.Profile.Address</span>
+                               </td>
+                           </tr>
+                           <tr>
+                               <th>
+                                   Telefon :
+                               </th>
+                               <td>
+                                   <span> @Model.Profile.Phone</span>
+                               </td>
+                           </tr>
+                       </tbody>
+                   </table>
+               </div>
+           </div>
+       </div>
+    </div>
+</section>
 

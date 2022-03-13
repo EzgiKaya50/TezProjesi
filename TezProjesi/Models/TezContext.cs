@@ -145,9 +145,7 @@ namespace TezProjesi.Models
 
                 entity.Property(e => e.Description).HasColumnName("description");
 
-                entity.Property(e => e.Detail)
-                    .HasColumnName("detail")
-                    .HasMaxLength(50);
+                entity.Property(e => e.Detail).HasColumnName("detail");
 
                 entity.Property(e => e.Email)
                     .HasColumnName("email")
@@ -289,6 +287,10 @@ namespace TezProjesi.Models
                     .HasColumnName("email")
                     .HasMaxLength(50);
 
+                entity.Property(e => e.Enddate)
+                    .HasColumnName("enddate")
+                    .HasColumnType("datetime");
+
                 entity.Property(e => e.HotelId).HasColumnName("hotel_id");
 
                 entity.Property(e => e.Ip)
@@ -306,6 +308,10 @@ namespace TezProjesi.Models
                     .HasMaxLength(20);
 
                 entity.Property(e => e.RoomId).HasColumnName("room_id");
+
+                entity.Property(e => e.Startdate)
+                    .HasColumnName("startdate")
+                    .HasColumnType("datetime");
 
                 entity.Property(e => e.Status).HasColumnName("status");
 

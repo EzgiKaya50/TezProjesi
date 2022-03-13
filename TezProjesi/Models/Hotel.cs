@@ -25,7 +25,7 @@ namespace TezProjesi.Models
         public string Country { get; set; }
         public string Location { get; set; }
         public int? Userid { get; set; }
-        public bool Status { get; set; }
+        public bool? Status { get; set; }
         public DateTime? CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
     }

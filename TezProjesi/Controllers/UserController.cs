@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,8 @@ namespace TezProjesi.Controllers
                 var userName = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
                
             }
+            model.reservation = new ReservationCRUD {startdate=DateTime.Now,enddate=DateTime.Now };
+
                return View(model);
         }
         public IActionResult Kaydol(string message)
@@ -77,11 +80,40 @@ namespace TezProjesi.Controllers
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index", "User");
         }
+        [Authorize(Roles = "User")]
         public ActionResult Profil()
+        {
+            var claimsIdentity = HttpContext.User.Identity as ClaimsIdentity;
+            var userName = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+            var userID = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value;
+
+            ProfilModels model = new ProfilModels
+            {
+                User = _context.User.FirstOrDefault(c => c.Id == Convert.ToInt32(userID) && c.Status == true),
+                Profile=_context.Profile.FirstOrDefault(c=> c.UserId== Convert.ToInt32(userID)),
+            };
+
+            if (model.Profile == null)
+            {
+                model.Profile = new Profile();
+            }
+
+            if (model.Profile.Address == null)
+            {
+                model.Profile.Address = "";
+            }
+            if (model.Profile.Phone == null)
+            {
+                model.Profile.Phone = "";
+            }
+
+            return View(model);
+        }
+        public ActionResult Randevularım()
         {
             return View();
         }
-        public ActionResult Randevularım()
+        public ActionResult RezervasyonAra(HomePageModels model)
         {
             return View();
         }

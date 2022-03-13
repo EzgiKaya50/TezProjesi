@@ -28,5 +28,7 @@ namespace TezProjesi.Models
         public bool? Status { get; set; }
         public DateTime? CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
+        public DateTime? Startdate { get; set; }
+        public DateTime? Enddate { get; set; }
     }
 }
