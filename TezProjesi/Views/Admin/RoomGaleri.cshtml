@@ -1,25 +1,24 @@
-﻿@model TezProjesi.CustomModels.HotelModels.HotelPage
+﻿@model TezProjesi.CustomModels.RoomGaleriModels.RoomGaleriPage
 @{
-    ViewData["Title"] = "Hotels";
+    ViewData["Title"] = "RoomGaleri";
     Layout = "~/Views/Shared/_Layout_admin.cshtml";
 }
 <div class="row">
     <div class="col-12 text-right">
         <div class="col-md-3 float-right">
-            <a href="@Url.Action("YeniOtelEkle","Admin")" class="btn btn-success btn-block mt-3 mb-3" type="button">Yeni Otel Ekle</a>
+            <a href="@Url.Action("OdaFotografEkle","Admin")" class="btn btn-success btn-block mt-3 mb-3" type="button">Oda Fotoğrafı Ekle</a>
         </div>
     </div>
 </div>
 <div class="table-responsive">
-    <table id="Hotel_table" class="display table table-striped table-bordered" style="width:100%">
+    <table id="RoomGaleri_table" class="display table table-striped table-bordered" style="width:100%">
         <thead>
             <tr>
                 <th scope="col">#</th>
+                <th scope="col">Oda</th>
+                <th scope="col">Otel</th>
                 <th scope="col">Başlık</th>
-                <th scope="col">Adres</th>
-                <th scope="col">Telefon Numarası</th>
-                <th scope="col">Şehir</th>
-                <th scope="col">Ülke</th>
+                <th scope="col">Fotoğraf</th>
                 <th scope="col" class="text-center">
                     <span class="small">
                         <span class="text-success">Düzenle</span> |
@@ -30,21 +29,21 @@
         </thead>
         @{ var cardIndx = 0; }
         <tbody>
-            @foreach (var Hotel in Model.HotelList)
+            @foreach (var RoomGaleri in Model.ImageList)
             {
                 cardIndx++;
-                <tr class="@Hotel.Id">
+                <tr class="@RoomGaleri.Id">
                     <th scope="row">@cardIndx</th>
-                    <td>@Hotel.Title</td>
-                    <td>@Hotel.Address</td>
-                    <td>@Hotel.Phone</td>
-                    <td>@Hotel.City</td>
-                    <td>@Hotel.Country</td>
+                    <td>@RoomGaleri.Room.Title</td>
+                    <td>@RoomGaleri.Room.Hotel.Title</td>
+                    <td>@RoomGaleri.Title</td>
+                    <td><img src="~/RoomImg/@RoomGaleri.RoomImg" style="height:100px" /></td>
+
                     <td scope="col" class="text-center">
-                        <a title="Düzenle" href="@Url.Action("OtelGuncelle","Admin",new {hotelId = Hotel.Id  })" class="text-success">
+                        <a title="Düzenle" href="@Url.Action("OdaFotografGuncelle","Admin",new {RoomGaleriId = RoomGaleri.Id  })" class="text-success">
                             <i class="fas fa-pen"></i>
                         </a>
-                        <a title="Sil" class="text-danger" href="@Url.Action("OtelSil","Admin",new {hotelId = Hotel.Id  })" onclick="return confirm('Silmek istediğinize emin misiniz?')">
+                        <a title="Sil" class="text-danger" href="@Url.Action("OdaFotografSil","Admin",new {RoomGaleriId = RoomGaleri.Id  })" onclick="return confirm('Silmek istediğinize emin misiniz?')">
                             <i class="fas fa-ban"></i>
                         </a>
                     </td>
@@ -55,12 +54,8 @@
 </div>
 <script>
     $(function () {
-        $("#Hotel_table").DataTable({
+        $("#RoomGaleri_table").DataTable({
             "responsive": true, "lengthChange": false, "autoWidth": false,
         }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     });
 </script>
-
-
-
-

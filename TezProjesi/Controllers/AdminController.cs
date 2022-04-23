@@ -17,6 +17,8 @@ using static TezProjesi.CustomModels.RoomModels;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using static TezProjesi.CustomModels.GaleriModels;
+using static TezProjesi.CustomModels.RoomGaleriModels;
 
 namespace TezProjesi.Controllers
 {
@@ -331,30 +333,6 @@ namespace TezProjesi.Controllers
             var claimsIdentity = HttpContext.User.Identity as ClaimsIdentity;
             var userName = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
             var userId = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value;
-
-            #region file op.
-            if (model.HotelImage != null)
-            {
-                string filePath = "";
-                string extension = Path.GetExtension(model.HotelImage.FileName);
-                Random rnd = new Random();
-                int rndx = rnd.Next(100, 999);
-                var FileNameWithoutExtension = Path.GetFileNameWithoutExtension(model.HotelImage.FileName);
-                string fileName = "UsrID-" + userId + "" + DateTime.Now.ToShortDateString().Replace(".", "-") + "" + FileNameWithoutExtension + "_" + rndx + extension;
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "HotelImg", fileName);
-                filePath = path;
-                using (System.IO.Stream stream = new FileStream(path, FileMode.Create))
-                {
-                    model.HotelImage.CopyTo(stream);
-                }
-                model.HotelCRUD.Image = fileName;
-            }
-            else
-            {
-                //no  need op.
-            }
-
-            #endregion
             var existHotels = _context.Hotel.FirstOrDefault(c => c.Id == model.HotelCRUD.Id);
             existHotels.Address = model.HotelCRUD.Address;
             existHotels.CategoryId = model.HotelCRUD.CategoryId;
@@ -364,10 +342,6 @@ namespace TezProjesi.Controllers
             existHotels.Detail = model.HotelCRUD.Detail;
             existHotels.Email = model.HotelCRUD.Email;
             existHotels.Fax = model.HotelCRUD.Fax;
-            if (model.HotelImage != null)
-            {
-                existHotels.Image = model.HotelCRUD.Image;
-            }
             existHotels.Keywords = model.HotelCRUD.Keywords;
             existHotels.Location = model.HotelCRUD.Location;
             existHotels.Phone = model.HotelCRUD.Phone;
@@ -399,6 +373,7 @@ namespace TezProjesi.Controllers
             var userName = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
             RoomPage model = new RoomPage();
             model.RoomList = _context.Room.Where(c => c.Status == true).ToList();
+            model.HotelList = _context.Hotel.Where(c => c.Status == true).ToList();
             return View(model);
         }
         [Authorize(Roles = "Admin")]
@@ -421,29 +396,6 @@ namespace TezProjesi.Controllers
             var claimsIdentity = HttpContext.User.Identity as ClaimsIdentity;
             var userName = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
             var userId = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value;
-            #region file op.
-            if (model.RoomImage != null)
-            {
-                string filePath = "";
-                string extension = Path.GetExtension(model.RoomImage.FileName);
-                Random rnd = new Random();
-                int rndx = rnd.Next(100, 999);
-                var FileNameWithoutExtension = Path.GetFileNameWithoutExtension(model.RoomImage.FileName);
-                string fileName = "UsrID-" + userId + "" + DateTime.Now.ToShortDateString().Replace(".", "-") + "" + FileNameWithoutExtension + "_" + rndx + extension;
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "RoomImg", fileName);
-                filePath = path;
-                using (System.IO.Stream stream = new FileStream(path, FileMode.Create))
-                {
-                    model.RoomImage.CopyTo(stream);
-                }
-                model.RoomCRUD.Image = fileName;
-            }
-            else
-            {
-                //no  need op.
-            }
-
-            #endregion
             model.RoomCRUD.Status = true;
             model.RoomCRUD.CreatedInt = DateTime.Now;
             model.RoomCRUD.UpdatedAt = DateTime.Now;
@@ -470,40 +422,13 @@ namespace TezProjesi.Controllers
             var claimsIdentity = HttpContext.User.Identity as ClaimsIdentity;
             var userName = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
             var userId = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value;
-
-            #region file op.
-            if (model.RoomImage != null)
-            {
-                string filePath = "";
-                string extension = Path.GetExtension(model.RoomImage.FileName);
-                Random rnd = new Random();
-                int rndx = rnd.Next(100, 999);
-                var FileNameWithoutExtension = Path.GetFileNameWithoutExtension(model.RoomImage.FileName);
-                string fileName = "UsrID-" + userId + "" + DateTime.Now.ToShortDateString().Replace(".", "-") + "" + FileNameWithoutExtension + "_" + rndx + extension;
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "RoomImg", fileName);
-                filePath = path;
-                using (System.IO.Stream stream = new FileStream(path, FileMode.Create))
-                {
-                    model.RoomImage.CopyTo(stream);
-                }
-                model.RoomCRUD.Image = fileName;
-            }
-            else
-            {
-                //no  need op.
-            }
-            #endregion
             var existRooms = _context.Room.FirstOrDefault(c => c.Id == model.RoomCRUD.Id);
             existRooms.Adet = model.RoomCRUD.Adet;
             existRooms.HotelId = model.RoomCRUD.HotelId;
             existRooms.Price = model.RoomCRUD.Price;
             existRooms.Title = model.RoomCRUD.Title;
             existRooms.Type = model.RoomCRUD.Type;
-            existRooms.Description = model.RoomCRUD.Description;
-            if(model.RoomImage != null)
-            {
-                existRooms.Image = model.RoomCRUD.Image;
-            }         
+            existRooms.Description = model.RoomCRUD.Description;        
             existRooms.UpdatedAt = DateTime.Now;
             _context.Entry(existRooms).State = EntityState.Modified;
             _context.SaveChanges();
@@ -524,7 +449,236 @@ namespace TezProjesi.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpPost]
+        public ActionResult Galeri()
+        {
+            var claimsIdentity = HttpContext.User.Identity as ClaimsIdentity;
+            var userName = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+            GaleriPage model = new GaleriPage();
+            model.ImageList = _context.Image.ToList();
+            model.HotelList = _context.Hotel.Where(c => c.Status == true).ToList();
+            return View(model);
+        }
+        public ActionResult FotografEkle()
+        {
+            var claimsIdentity = HttpContext.User.Identity as ClaimsIdentity;
+            var userName = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+            GaleriPage model = new GaleriPage();
+            model.ImageCRUD = new Image();
+            model.HotelList = _context.Hotel.Where(c => c.Status == true).ToList();
+            return View(model);
+        }
+        public ActionResult FotografGuncelle(int GaleriId)
+        {
+            var claimsIdentity = HttpContext.User.Identity as ClaimsIdentity;
+            var userName = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+            GaleriPage model = new GaleriPage();
+            model.ImageCRUD = _context.Image.FirstOrDefault(c=> c.Id==GaleriId);
+            model.HotelList = _context.Hotel.ToList();
+            return View(model);
+        }
+        public ActionResult FotografGuncelleKaydet(GaleriPage model)
+        {
+            var claimsIdentity = HttpContext.User.Identity as ClaimsIdentity;
+            var userName = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+            var userId = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value;
+
+            #region file op.
+            if (model.Image != null)
+            {
+                string filePath = "";
+                string extension = Path.GetExtension(model.Image.FileName);
+                Random rnd = new Random();
+                int rndx = rnd.Next(100, 999);
+                var FileNameWithoutExtension = Path.GetFileNameWithoutExtension(model.Image.FileName);
+                string fileName = "UsrID-" + userId + "" + DateTime.Now.ToShortDateString().Replace(".", "-") + "" + FileNameWithoutExtension + "_" + rndx + extension;
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "HotelImg", fileName);
+                filePath = path;
+                using (System.IO.Stream stream = new FileStream(path, FileMode.Create))
+                {
+                    model.Image.CopyTo(stream);
+                }
+                model.ImageCRUD.HotelImg = fileName;
+            }
+            else
+            {
+                //no  need op.
+            }
+            #endregion
+            var existImage = _context.Image.FirstOrDefault(c => c.Id == model.ImageCRUD.Id);
+            existImage.HotelId = model.ImageCRUD.HotelId;
+            existImage.Title = model.ImageCRUD.Title;
+            if (model.Image != null)
+            {
+                existImage.HotelImg = model.ImageCRUD.HotelImg;
+            }
+            _context.Entry(existImage).State = EntityState.Modified;
+            _context.SaveChanges();
+            return RedirectToAction("Galeri", "Admin");
+        }
+        public ActionResult FotografKaydet(GaleriPage model)
+        {
+            var claimsIdentity = HttpContext.User.Identity as ClaimsIdentity;
+            var userName = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+            var userId = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value;
+            #region file op.
+            if (model.Image != null)
+            {
+                string filePath = "";
+                string extension = Path.GetExtension(model.Image.FileName);
+                Random rnd = new Random();
+                int rndx = rnd.Next(100, 999);
+                var FileNameWithoutExtension = Path.GetFileNameWithoutExtension(model.Image.FileName);
+                string fileName = "UsrID-" + userId + "" + DateTime.Now.ToShortDateString().Replace(".", "-") + "" + FileNameWithoutExtension + "_" + rndx + extension;
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "HotelImg", fileName);
+                filePath = path;
+                using (System.IO.Stream stream = new FileStream(path, FileMode.Create))
+                {
+                    model.Image.CopyTo(stream);
+                }
+                model.ImageCRUD.HotelImg = fileName;
+            }
+            else
+            {
+                //no  need op.
+            }
+
+            #endregion
+            _context.Image.Add(model.ImageCRUD);
+            _context.SaveChanges();
+            return RedirectToAction("Galeri", "Admin");
+
+
+        }
+        public ActionResult FotografSil(int GaleriId)
+        {
+            var claimsIdentity = HttpContext.User.Identity as ClaimsIdentity;
+            var userName = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+            var existImage = _context.Image.FirstOrDefault(c => c.Id == GaleriId);
+            _context.Image.Remove(existImage);
+            _context.SaveChanges();
+            return RedirectToAction("Galeri", "Admin");
+        }
+        public ActionResult RoomGaleri()
+        {
+            var claimsIdentity = HttpContext.User.Identity as ClaimsIdentity;
+            var userName = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+            RoomGaleriPage model = new RoomGaleriPage();
+            model.ImageList = _context.RoomImages.Include(c => c.Room).ThenInclude(c => c.Hotel).ToList();
+            model.RoomList = _context.Room.Include(c=> c.Hotel).Where(c => c.Status == true).ToList();
+            return View(model);
+        }
+        public ActionResult OdaFotografEkle()
+        {
+            var claimsIdentity = HttpContext.User.Identity as ClaimsIdentity;
+            var userName = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+            RoomGaleriPage model = new RoomGaleriPage();
+            model.RoomImgCRUD = new RoomImages();
+            model.RoomList = _context.Room.Where(c => c.Status == true).Include(c=> c.Hotel).ToList();
+
+            foreach(var room in model.RoomList)
+            {
+                room.Title = room.Title + "/" + room.Hotel.Title;
+            }
+            return View(model);
+
+        }
+        public ActionResult OdaFotografGuncelle(int RoomGaleriId)
+        {
+            var claimsIdentity = HttpContext.User.Identity as ClaimsIdentity;
+            var userName = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+            RoomGaleriPage model = new RoomGaleriPage();
+            model.RoomImgCRUD = _context.RoomImages.FirstOrDefault(c => c.Id == RoomGaleriId);
+            model.RoomList = _context.Room.Where(c => c.Status == true).Include(c => c.Hotel).ToList();
+
+            foreach (var room in model.RoomList)
+            {
+                room.Title = room.Title + "/" + room.Hotel.Title;
+            }
+            return View(model);
+
+        }
+        public ActionResult OdaFotografKaydet(RoomGaleriPage model)
+        {
+            var claimsIdentity = HttpContext.User.Identity as ClaimsIdentity;
+            var userName = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+            var userId = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value;
+            #region file op.
+            if (model.RoomImg != null)
+            {
+                string filePath = "";
+                string extension = Path.GetExtension(model.RoomImg.FileName);
+                Random rnd = new Random();
+                int rndx = rnd.Next(100, 999);
+                var FileNameWithoutExtension = Path.GetFileNameWithoutExtension(model.RoomImg.FileName);
+                string fileName = "UsrID-" + userId + "" + DateTime.Now.ToShortDateString().Replace(".", "-") + "" + FileNameWithoutExtension + "_" + rndx + extension;
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "RoomImg", fileName);
+                filePath = path;
+                using (System.IO.Stream stream = new FileStream(path, FileMode.Create))
+                {
+                    model.RoomImg.CopyTo(stream);
+                }
+                model.RoomImgCRUD.RoomImg = fileName;
+            }
+            else
+            {
+                //no  need op.
+            }
+
+            #endregion
+            _context.RoomImages.Add(model.RoomImgCRUD);
+            _context.SaveChanges();
+            return RedirectToAction("RoomGaleri", "Admin");
+
+
+        }
+        public ActionResult OdaFotografGuncelleKaydet(RoomGaleriPage model)
+        {
+            var claimsIdentity = HttpContext.User.Identity as ClaimsIdentity;
+            var userName = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+            var userId = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value;
+
+            #region file op.
+            if (model.RoomImg != null)
+            {
+                string filePath = "";
+                string extension = Path.GetExtension(model.RoomImg.FileName);
+                Random rnd = new Random();
+                int rndx = rnd.Next(100, 999);
+                var FileNameWithoutExtension = Path.GetFileNameWithoutExtension(model.RoomImg.FileName);
+                string fileName = "UsrID-" + userId + "" + DateTime.Now.ToShortDateString().Replace(".", "-") + "" + FileNameWithoutExtension + "_" + rndx + extension;
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "RoomImg", fileName);
+                filePath = path;
+                using (System.IO.Stream stream = new FileStream(path, FileMode.Create))
+                {
+                    model.RoomImg.CopyTo(stream);
+                }
+                model.RoomImgCRUD.RoomImg = fileName;
+            }
+            else
+            {
+                //no  need op.
+            }
+            #endregion
+            var existRoomImg = _context.RoomImages.FirstOrDefault(c => c.Id == model.RoomImgCRUD.Id);
+            existRoomImg.RoomId = model.RoomImgCRUD.RoomId;
+            existRoomImg.Title = model.RoomImgCRUD.Title;
+            if (model.RoomImg != null)
+            {
+                existRoomImg.RoomImg = model.RoomImgCRUD.RoomImg;
+            }
+            _context.Entry(existRoomImg).State = EntityState.Modified;
+            _context.SaveChanges();
+            return RedirectToAction("RoomGaleri", "Admin");
+        }
+        public ActionResult OdaFotografSil(int RoomGaleriId)
+        {
+            var claimsIdentity = HttpContext.User.Identity as ClaimsIdentity;
+            var userName = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+            var existRoomImg = _context.RoomImages.FirstOrDefault(c => c.Id == RoomGaleriId);
+            _context.RoomImages.Remove(existRoomImg);
+            _context.SaveChanges();
+            return RedirectToAction("RoomGaleri", "Admin");
+        }
         public ActionResult KategoriKaydet(YeniKategoriEklePage model)
         {
             var claimsIdentity = HttpContext.User.Identity as ClaimsIdentity;
@@ -566,29 +720,6 @@ namespace TezProjesi.Controllers
             var claimsIdentity = HttpContext.User.Identity as ClaimsIdentity;
             var userName = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
             var userId = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value;
-            #region file op.
-            if (model.HotelImage != null)
-            {
-                string filePath = "";
-                string extension = Path.GetExtension(model.HotelImage.FileName);
-                Random rnd = new Random();
-                int rndx = rnd.Next(100, 999);
-                var FileNameWithoutExtension = Path.GetFileNameWithoutExtension(model.HotelImage.FileName);
-                string fileName = "UsrID-" + userId + "" + DateTime.Now.ToShortDateString().Replace(".", "-") + "" + FileNameWithoutExtension + "_" + rndx + extension;
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "HotelImg", fileName);
-                filePath = path;
-                using (System.IO.Stream stream = new FileStream(path, FileMode.Create))
-                {
-                    model.HotelImage.CopyTo(stream);
-                }
-                model.HotelCRUD.Image = fileName;
-            }
-            else
-            {
-                //no  need op.
-            }
-
-            #endregion
             model.HotelCRUD.Status = true;
             model.HotelCRUD.CreatedAt = DateTime.Now;
             model.HotelCRUD.UpdatedAt = DateTime.Now;

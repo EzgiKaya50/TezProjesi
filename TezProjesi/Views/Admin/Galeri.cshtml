@@ -1,25 +1,23 @@
-﻿@model TezProjesi.CustomModels.RoomModels.RoomPage
+﻿@model TezProjesi.CustomModels.GaleriModels.GaleriPage
 @{
-    ViewData["Title"] = "Rooms";
+    ViewData["Title"] = "Galeri";
     Layout = "~/Views/Shared/_Layout_admin.cshtml";
 }
 <div class="row">
     <div class="col-12 text-right">
         <div class="col-md-3 float-right">
-            <a href="@Url.Action("OdaEkle","Admin")" class="btn btn-success btn-block mt-3 mb-3" type="button">Oda Ekle</a>
+            <a href="@Url.Action("FotografEkle","Admin")" class="btn btn-success btn-block mt-3 mb-3" type="button">Fotoğraf Ekle</a>
         </div>
     </div>
 </div>
 <div class="table-responsive">
-    <table id="Room_table" class="display table table-striped table-bordered" style="width:100%">
+    <table id="Galeri_table" class="display table table-striped table-bordered" style="width:100%">
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Hotel</th>
+                <th scope="col">Otel</th>
                 <th scope="col">Başlık</th>
-                <th scope="col">Adet</th>
-                <th scope="col">Fiyat</th>
-                <th scope="col">Tür</th>
+                <th scope="col">Fotoğraf</th>
                 <th scope="col" class="text-center">
                     <span class="small">
                         <span class="text-success">Düzenle</span> |
@@ -30,21 +28,20 @@
         </thead>
         @{ var cardIndx = 0; }
         <tbody>
-            @foreach (var Room in Model.RoomList)
+            @foreach (var Galeri in Model.ImageList)
             {
                 cardIndx++;
-            <tr class="@Room.Id">
+            <tr class="@Galeri.Id">
                 <th scope="row">@cardIndx</th>
-                <td>@Model.HotelList.FirstOrDefault(c => c.Id == Room.HotelId).Title</td>
-                <td>@Room.Title</td>
-                <td>@Room.Adet</td>
-                <td>@Room.Price</td>
-                <td>@Room.Type</td>
+                <td>@Model.HotelList.FirstOrDefault(c => c.Id == Galeri.HotelId).Title</td>
+                <td>@Galeri.Title</td>
+                <td><img src="~/HotelImg/@Galeri.HotelImg" style="height:100px" /></td>
+
                 <td scope="col" class="text-center">
-                    <a title="Düzenle" href="@Url.Action("OdaGuncelle","Admin",new {RoomId = Room.Id  })" class="text-success">
+                    <a title="Düzenle" href="@Url.Action("FotografGuncelle","Admin",new {GaleriId = Galeri.Id  })" class="text-success">
                         <i class="fas fa-pen"></i>
                     </a>
-                    <a title="Sil" class="text-danger" href="@Url.Action("OdaSil","Admin",new {RoomId = Room.Id  })" onclick="return confirm('Silmek istediğinize emin misiniz?')">
+                    <a title="Sil" class="text-danger" href="@Url.Action("FotografSil","Admin",new {GaleriId = Galeri.Id  })" onclick="return confirm('Silmek istediğinize emin misiniz?')">
                         <i class="fas fa-ban"></i>
                     </a>
                 </td>
@@ -55,9 +52,8 @@
 </div>
 <script>
     $(function () {
-        $("#Room_table").DataTable({
+        $("#Galeri_table").DataTable({
             "responsive": true, "lengthChange": false, "autoWidth": false,
         }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     });
 </script>
-

@@ -1,0 +1,44 @@
+﻿@model TezProjesi.CustomModels.GaleriModels.GaleriPage
+@{
+    ViewData["Title"] = "FotografGuncelle";
+    Layout = "~/Views/Shared/_Layout_admin.cshtml";
+}
+<script src="~/js/ckeditor/ckeditor.js"></script>
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">Fotoğraf Ekle</h3>
+            </div>
+
+            <div class="card-body">
+                @using (Html.BeginForm("FotografGuncelleKaydet", "Admin", FormMethod.Post, new { @class = "", @enctype = "multipart/form-data" }))
+                {
+                    @Html.HiddenFor(m => m.ImageCRUD.Id)
+                    <div class="col-lg-12 col-md-12">
+                        <div class="form-group">
+                            <label for="Hotel">Otel:</label>
+                            @Html.DropDownListFor(m => m.ImageCRUD.HotelId, new SelectList(Model.HotelList, "Id", "Title"), "Seçiniz..", new { @class = "form-control", @id = "questionDifficulty", @placeholder = "Zorluk", @required = "true" })
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12">
+                        <div class="form-group">
+                            <label for="title">Başlık:</label>
+                            @Html.TextBoxFor(c => c.ImageCRUD.Title, null, new { @class = "form-control", @id = "title", @placeholder = "Başlık", @required = "true", @maxlenght = "50" })
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12">
+                        <div class="form-group">
+                            <label for="Image">Resim:</label>
+                            <input type="file" id="file" name="Image" class="form-control">
+                        </div>
+                    </div>
+                    <img src="~/HotelImg/@Model.ImageCRUD.HotelImg" style="height:200px" />
+                    <div class="col-md-2"><button type="submit" class="btn btn-success btn-block">Kaydet</button></div>
+                }
+            </div>
+        </div>
+    </div>
+
+</section>
+

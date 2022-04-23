@@ -1,6 +1,36 @@
-﻿
+﻿@model List<Hotel>
 @{
     ViewData["Title"] = "Oteller";
     Layout = "~/Views/Shared/_Layout_user.cshtml";
 }
+<section class="accomodation_area section_gap">
+    <div class="container">
+        <div class="section_title text-center">
+            <h3 class="title_color"><span>Oteller</span></h3>
+        </div>
+        <div class="row mb-5">
+            <div class="col-4">
+                <div class="col-12">
+                    @foreach (var Hotel in Model)
+                    {
+                        <span>@Hotel.Title</span>
+                        <br />
+                        <span>@Hotel.Address</span>
+                        <br />
+                        <span>@Hotel.City</span>
+                        <br />
+                        <span>@Hotel.Country</span>
+                        <br />
+                        @foreach (var Image in Hotel.Image)
+                        {
+                            <img src="~/HotelImg/@Image.HotelImg" style="height:100px" />
 
+                        }
+
+                        <a class="btn btn-success btn-user btn-block" href="@Url.Action("OtelDetay","User",new { hotelId=Hotel.Id})">Detay</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -18,5 +18,6 @@ namespace TezProjesi.Models
         public DateTime? CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
         public int? UserType { get; set; }
+        public string Phone { get; set; }
     }
 }

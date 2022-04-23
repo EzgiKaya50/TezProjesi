@@ -28,6 +28,7 @@ namespace TezProjesi.Models
         public virtual DbSet<Profile> Profile { get; set; }
         public virtual DbSet<Reservation> Reservation { get; set; }
         public virtual DbSet<Room> Room { get; set; }
+        public virtual DbSet<RoomImages> RoomImages { get; set; }
         public virtual DbSet<Setting> Setting { get; set; }
         public virtual DbSet<User> User { get; set; }
 
@@ -155,8 +156,6 @@ namespace TezProjesi.Models
                     .HasColumnName("fax")
                     .HasMaxLength(30);
 
-                entity.Property(e => e.Image).HasColumnName("image");
-
                 entity.Property(e => e.Keywords)
                     .HasColumnName("keywords")
                     .HasMaxLength(50);
@@ -192,11 +191,16 @@ namespace TezProjesi.Models
 
                 entity.Property(e => e.HotelId).HasColumnName("hotel_id");
 
-                entity.Property(e => e.Image1).HasColumnName("image");
+                entity.Property(e => e.HotelImg).HasColumnName("hotelImg");
 
                 entity.Property(e => e.Title)
                     .HasColumnName("title")
                     .HasMaxLength(50);
+
+                entity.HasOne(d => d.Hotel)
+                    .WithMany(p => p.Image)
+                    .HasForeignKey(d => d.HotelId)
+                    .HasConstraintName("FK_image_PKhotel");
             });
 
             modelBuilder.Entity<Message>(entity =>
@@ -336,6 +340,10 @@ namespace TezProjesi.Models
 
                 entity.Property(e => e.Adet).HasColumnName("adet");
 
+                entity.Property(e => e.Adult).HasColumnName("adult");
+
+                entity.Property(e => e.Children).HasColumnName("children");
+
                 entity.Property(e => e.CreatedInt)
                     .HasColumnName("created_int")
                     .HasColumnType("datetime");
@@ -343,8 +351,6 @@ namespace TezProjesi.Models
                 entity.Property(e => e.Description).HasColumnName("description");
 
                 entity.Property(e => e.HotelId).HasColumnName("hotel_id");
-
-                entity.Property(e => e.Image).HasColumnName("image");
 
                 entity.Property(e => e.Price).HasColumnName("price");
 
@@ -359,6 +365,29 @@ namespace TezProjesi.Models
                 entity.Property(e => e.UpdatedAt)
                     .HasColumnName("updated_at")
                     .HasColumnType("datetime");
+
+                entity.HasOne(d => d.Hotel)
+                    .WithMany(p => p.Room)
+                    .HasForeignKey(d => d.HotelId)
+                    .HasConstraintName("FK_room_Hotel");
+            });
+
+            modelBuilder.Entity<RoomImages>(entity =>
+            {
+                entity.ToTable("roomImages");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.RoomId).HasColumnName("room_id");
+
+                entity.Property(e => e.RoomImg).HasColumnName("roomImg");
+
+                entity.Property(e => e.Title).HasColumnName("title");
+
+                entity.HasOne(d => d.Room)
+                    .WithMany(p => p.RoomImages)
+                    .HasForeignKey(d => d.RoomId)
+                    .HasConstraintName("FK_roomImages_PKroom");
             });
 
             modelBuilder.Entity<Setting>(entity =>
@@ -467,6 +496,10 @@ namespace TezProjesi.Models
                 entity.Property(e => e.Password)
                     .HasColumnName("password")
                     .HasMaxLength(50);
+
+                entity.Property(e => e.Phone)
+                    .HasColumnName("phone")
+                    .HasMaxLength(20);
 
                 entity.Property(e => e.Status).HasColumnName("status");
 

@@ -7,13 +7,13 @@ using System.Collections.Generic;
 
 namespace TezProjesi.Models
 {
-    public partial class Image
+    public partial class RoomImages
     {
         public int Id { get; set; }
-        public int? HotelId { get; set; }
+        public int? RoomId { get; set; }
         public string Title { get; set; }
-        public string HotelImg { get; set; }
+        public string RoomImg { get; set; }
 
-        public virtual Hotel Hotel { get; set; }
+        public virtual Room Room { get; set; }
     }
 }

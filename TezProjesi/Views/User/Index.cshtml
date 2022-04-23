@@ -28,27 +28,27 @@
                                 <div class="col-md-4">
                                     <div class="book_tabel_item">
                                         <div class="input-group">
-                                            <input type='date' class="form-control" placeholder="Giriş Tarihi" asp-for="reservation.startdate" />
+                                            <input type='date' class="form-control"required placeholder="Giriş Tarihi" asp-for="reservation.startdate" />
                                         </div>
                                         <div class="input-group">
-                                            <input type='date' class="form-control" placeholder="Çıkış Tarihi" asp-for="reservation.enddate" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="book_tabel_item">
-                                        <div class="input-group">
-                                            <input type='text' class="form-control" placeholder="Yetişkin Sayısı" asp-for="reservation.adults" />
-                                        </div>
-                                        <div class="input-group">
-                                            <input type='text' class="form-control" placeholder="Çocuk Sayısı" asp-for="reservation.children" />
+                                            <input type='date' class="form-control"required placeholder="Çıkış Tarihi" asp-for="reservation.enddate" />
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="book_tabel_item">
                                         <div class="input-group">
-                                            <select class="form-control" asp-for="reservation.HotelID" asp-items="@new SelectList(Model.HotelList, nameof(Hotel.Id), nameof(Hotel.Title))">
+                                            <input type='text' class="form-control"required placeholder="Yetişkin Sayısı" asp-for="reservation.adults" />
+                                        </div>
+                                        <div class="input-group">
+                                            <input type='text' class="form-control" required placeholder="Çocuk Sayısı" asp-for="reservation.children" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="book_tabel_item">
+                                        <div class="input-group">
+                                            <select class="form-control" required asp-for="reservation.HotelID" asp-items="@new SelectList(Model.HotelList, nameof(Hotel.Id), nameof(Hotel.Title))">
                                                 <option disabled selected>Seçiniz..</option>
                                             </select>
                                         </div>

@@ -5,3 +5,20 @@
 }
 
 
+<section class="accomodation_area section_gap">
+    <div class="container">
+        <div class="section_title text-center">
+            <h3 class="title_color"><span>Rezervasyonlarım</span></h3>
+        </div>
+        <div class="row mb-5">
+            <div class="col-4">
+                <div class="col-12">
+                    @foreach (var reservation in Model.Reservations)
+                    {
+                        <span>@reservation.Total </span>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,24 @@
+﻿@model TezProjesi.CustomModels.HomePageModels
+@{
+    ViewData["Title"] = "RezervasyonAra";
+    Layout = "~/Views/Shared/_Layout_user.cshtml";
+}
+
+<section class="accomodation_area section_gap">
+    <div class="container">
+        <div class="section_title text-center">
+            <h3 class="title_color"><span>Odalar</span></h3>
+        </div>
+        <div class="row mb-5">
+            <div class="col-4">
+                <div class="col-12">
+                    @foreach (var room in Model.RoomList)
+                    {
+                        <span>@room.HotelId </span>
+                        <a class="book_now_btn button_hover" href="@Url.Action("RezervasyonYap","User", new {startDate = Model.reservation.startdate,endDate= Model.reservation.enddate,children= Model.reservation.children,adults= Model.reservation.adults,hotelID= Model.reservation.HotelID,roomID = room.Id })">Rezervasyon Yap</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
