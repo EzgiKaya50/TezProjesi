@@ -3,27 +3,29 @@
     ViewData["Title"] = "OtelDetay";
     Layout = "~/Views/Shared/_Layout_user.cshtml";
 }
-<section class="accomodation_area section_gap">
+<section class="testimonial_area section_gap">
     <div class="container">
         <div class="section_title text-center">
-            <h3 class="title_color"><span>Otel Detay</span></h3>
+            <h2 class="title_color">@Model.Title</h2>
+            <p>@Model.Address  @Model.Phone</p>
         </div>
-        <div class="row mb-5">
-            <div class="col-4">
-                <div class="col-12">
-                    <span> @Model.Title</span><br />
-                    <span> @Model.Phone</span><br />
-                    <span> @Model.Location</span><br />
-                    <span> @Model.City</span><br />
-                    @foreach (var Room in Model.Room)
-                    {
-                        @foreach (var RoomImg in Room.RoomImages)
-                        {
-                            <img src="~/RoomImg/@RoomImg.RoomImg" style="height:100px" />
-                        }
-                    }
-                </div>
-            </div>
+        <div class="testimonial_slider owl-carousel">
+
+            @foreach (var Room in Model.Room.Where(c => c.Status == true))
+            {
+                @foreach (var RoomImg in Room.RoomImages)
+                {
+                    <div class="col-12">
+                        <div class="accomodation_item text-left">
+                            <div class="hotel_img">
+                                <img src="~/RoomImg/@RoomImg.RoomImg" style="width:300px !important; height:auto;" />
+                                <a class="btn theme_btn button_hover text-white">@Room.Price ₺</a>
+                            </div>
+                            <h6><small></small></h6>
+                        </div>
+                    </div>
+                }
+            }
         </div>
     </div>
 </section>

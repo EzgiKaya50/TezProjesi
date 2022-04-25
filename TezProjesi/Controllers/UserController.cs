@@ -27,9 +27,9 @@ namespace TezProjesi.Controllers
             HomePageModels model = new HomePageModels();
             model.FaqList = _context.Faq.Where(c => c.Status == true).ToList();
             model.HotelList = _context.Hotel.Where(c => c.Status == true).ToList();
-            model.CommentList = _context.Comment.Where(c => c.Status == true).ToList();
+            model.CommentList = _context.Comments.Where(c => c.Status == true).Include(c => c.Hotel).Include(c => c.User).ToList();
             model.RoomList = _context.Room.Where(c => c.Status == true).ToList();
-
+            model.RandomList = _context.Hotel.Where(c=>c.Status==true).Include(c=>c.Image).OrderBy(c => Guid.NewGuid()).Take(4).ToList();
             if (HttpContext.User.Identity.IsAuthenticated == true)
             {
                 var claimsIdentity = HttpContext.User.Identity as ClaimsIdentity;
@@ -69,10 +69,6 @@ namespace TezProjesi.Controllers
 
         //    return View();
         //}
-        public ActionResult İletisim()
-        {
-            return View();
-        }
         public ActionResult Oteller()
         {
             List<Hotel> HotelList = _context.Hotel.Where(c => c.Status == true).Include(c => c.Image).ToList();
@@ -81,9 +77,9 @@ namespace TezProjesi.Controllers
         }
         public ActionResult OtelDetay(int hotelId)
         {
-            Hotel model = _context.Hotel.Where(c => c.Id==hotelId && c.Status == true).Include(x => x.Room).ThenInclude(c => c.RoomImages).FirstOrDefault();
+            Hotel model = _context.Hotel.Where(c => c.Id == hotelId && c.Status == true).Include(x => x.Room).ThenInclude(c => c.RoomImages).FirstOrDefault();
 
-          return  View(model);
+            return View(model);
         }
         public async Task<IActionResult> CikisYapUser()
         {
@@ -126,7 +122,7 @@ namespace TezProjesi.Controllers
             var userID = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value;
 
             RandevuModels model = new RandevuModels();
-            model.Reservations = _context.Reservation.Where(c => c.Status == true && c.UserId == Convert.ToInt32(userID)).ToList();
+            model.Reservations = _context.Reservation.Where(c => c.Status == true && c.UserId == Convert.ToInt32(userID)).Include(c => c.Hotel).Include(c => c.Room).ToList();
             return View(model);
         }
         public ActionResult RezervasyonYap(DateTime startDate, DateTime endDate, int children, int adults, int hotelID, int roomID)
@@ -173,7 +169,7 @@ namespace TezProjesi.Controllers
                 var userName = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
                 var userID = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value;
 
-                model.RoomList = _context.Room.Where(c => c.HotelId == model.reservation.HotelID && c.Adult == model.reservation.adults && c.Children == model.reservation.children && c.Status == true).ToList();
+                model.RoomList = _context.Room.Where(c => c.HotelId == model.reservation.HotelID && c.Adult == model.reservation.adults && c.Children == model.reservation.children && c.Status == true).Include(c => c.RoomImages).ToList();
                 var existReservation = _context.Reservation.Where(c => c.HotelId == model.reservation.HotelID && (c.Startdate >= model.reservation.startdate && c.Enddate <= model.reservation.startdate)).ToList();
                 foreach (var room in existReservation)
                 {
@@ -189,5 +185,26 @@ namespace TezProjesi.Controllers
                 return RedirectToAction("UserLogin", "Giris");
             }
         }
+        public ActionResult YorumKaydet(RandevuModels model)
+        {
+
+            var claimsIdentity = HttpContext.User.Identity as ClaimsIdentity;
+            var userName = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+            var userID = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value;
+
+            Comments comment = new Comments()
+            {
+                CreatedAt = DateTime.Now,
+                Status = true,
+                UpdatedAt = DateTime.Now,
+                HotelId = model.hotelId,
+                UserId = model.userId,
+                UserComment = model.comment,
+            };
+            _context.Comments.Add(comment);
+            _context.SaveChanges();
+            return RedirectToAction("Randevularım", "User");
+        }
+
     }
 }

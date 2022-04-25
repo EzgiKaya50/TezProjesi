@@ -11,6 +11,7 @@ namespace TezProjesi.Models
     {
         public Room()
         {
+            Reservation = new HashSet<Reservation>();
             RoomImages = new HashSet<RoomImages>();
         }
 
@@ -28,6 +29,7 @@ namespace TezProjesi.Models
         public int? Children { get; set; }
 
         public virtual Hotel Hotel { get; set; }
+        public virtual ICollection<Reservation> Reservation { get; set; }
         public virtual ICollection<RoomImages> RoomImages { get; set; }
     }
 }

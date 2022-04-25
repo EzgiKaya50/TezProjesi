@@ -10,7 +10,7 @@ namespace TezProjesi.CustomModels
     {
         public class CommentPage
         {
-            public List<Comment> CommentList { get; set; }
+            public List<Comments> CommentList { get; set; }
         }
     }
 }

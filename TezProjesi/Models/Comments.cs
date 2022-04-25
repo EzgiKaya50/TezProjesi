@@ -7,10 +7,10 @@ using System.Collections.Generic;
 
 namespace TezProjesi.Models
 {
-    public partial class Comment
+    public partial class Comments
     {
         public int Id { get; set; }
-        public string Comment1 { get; set; }
+        public string UserComment { get; set; }
         public double? Rate { get; set; }
         public int? HotelId { get; set; }
         public int? UserId { get; set; }
@@ -18,5 +18,8 @@ namespace TezProjesi.Models
         public bool? Status { get; set; }
         public DateTime? CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
+
+        public virtual Hotel Hotel { get; set; }
+        public virtual User User { get; set; }
     }
 }

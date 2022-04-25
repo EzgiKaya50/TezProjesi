@@ -20,7 +20,7 @@ namespace TezProjesi.Models
         }
 
         public virtual DbSet<Category> Category { get; set; }
-        public virtual DbSet<Comment> Comment { get; set; }
+        public virtual DbSet<Comments> Comments { get; set; }
         public virtual DbSet<Faq> Faq { get; set; }
         public virtual DbSet<Hotel> Hotel { get; set; }
         public virtual DbSet<Image> Image { get; set; }
@@ -74,13 +74,11 @@ namespace TezProjesi.Models
                     .HasColumnType("datetime");
             });
 
-            modelBuilder.Entity<Comment>(entity =>
+            modelBuilder.Entity<Comments>(entity =>
             {
-                entity.ToTable("comment");
+                entity.ToTable("comments");
 
                 entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.Comment1).HasColumnName("comment");
 
                 entity.Property(e => e.CreatedAt)
                     .HasColumnName("created_at")
@@ -98,7 +96,19 @@ namespace TezProjesi.Models
                     .HasColumnName("updated_at")
                     .HasColumnType("datetime");
 
+                entity.Property(e => e.UserComment).HasColumnName("user_comment");
+
                 entity.Property(e => e.UserId).HasColumnName("user_id");
+
+                entity.HasOne(d => d.Hotel)
+                    .WithMany(p => p.Comments)
+                    .HasForeignKey(d => d.HotelId)
+                    .HasConstraintName("FK_comment_hotel");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Comments)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("FK_comment_user");
             });
 
             modelBuilder.Entity<Faq>(entity =>
@@ -330,6 +340,21 @@ namespace TezProjesi.Models
                     .HasColumnType("datetime");
 
                 entity.Property(e => e.UserId).HasColumnName("user_id");
+
+                entity.HasOne(d => d.Hotel)
+                    .WithMany(p => p.Reservation)
+                    .HasForeignKey(d => d.HotelId)
+                    .HasConstraintName("FK_reservation_hotel");
+
+                entity.HasOne(d => d.Room)
+                    .WithMany(p => p.Reservation)
+                    .HasForeignKey(d => d.RoomId)
+                    .HasConstraintName("FK_reservation_room");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Reservation)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("FK_reservation_user");
             });
 
             modelBuilder.Entity<Room>(entity =>

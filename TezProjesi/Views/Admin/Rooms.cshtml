@@ -39,7 +39,7 @@
                 <td>@Room.Title</td>
                 <td>@Room.Adet</td>
                 <td>@Room.Price</td>
-                <td>@Room.Type</td>
+                <td>@Model.RoomType.Type.FirstOrDefault(c => c.Value == Room.Type.ToString()).Text</td>
                 <td scope="col" class="text-center">
                     <a title="Düzenle" href="@Url.Action("OdaGuncelle","Admin",new {RoomId = Room.Id  })" class="text-success">
                         <i class="fas fa-pen"></i>

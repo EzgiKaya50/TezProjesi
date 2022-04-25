@@ -35,13 +35,25 @@
                     <div class="col-lg-12 col-md-12">
                         <div class="form-group">
                             <label for="Adet">Adet:</label>
-                            @Html.TextBoxFor(c => c.RoomCRUD.Adet, null, new { @class = "form-control", @id = "Adet", @placeholder = "Adet", @type="number", @required = "true", @maxlenght = "50" })
+                            @Html.TextBoxFor(c => c.RoomCRUD.Adet, null, new { @class = "form-control", @id = "Adet", @placeholder = "Adet", @type = "number", @required = "true", @maxlenght = "50" })
                         </div>
                     </div>
                     <div class="col-lg-12 col-md-12">
                         <div class="form-group">
                             <label for="Price">Fiyat:</label>
-                            @Html.TextBoxFor(c => c.RoomCRUD.Price, new { @class = "form-control", @id = "Price", @placeholder = "Fiyat", @type="number", @required = "true", @maxlenght = "50" })
+                            @Html.TextBoxFor(c => c.RoomCRUD.Price, new { @class = "form-control", @id = "Price", @placeholder = "Fiyat", @type = "number", @required = "true", @maxlenght = "50" })
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12">
+                        <div class="form-group">
+                            <label for="Price">Yetişkin:</label>
+                            @Html.TextBoxFor(c => c.RoomCRUD.Adult, new { @class = "form-control", @id = "Adult", @placeholder = "Yetişkin", @type = "number", @required = "true", @maxlenght = "50" })
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12">
+                        <div class="form-group">
+                            <label for="Price">Çocuk:</label>
+                            @Html.TextBoxFor(c => c.RoomCRUD.Children, new { @class = "form-control", @id = "Children", @placeholder = "Çocuk", @type = "number", @required = "true", @maxlenght = "50" })
                         </div>
                     </div>
                     <div class="col-lg-12 col-md-12">

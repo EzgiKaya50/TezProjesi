@@ -3,21 +3,42 @@
     ViewData["Title"] = "Randevularım";
     Layout = "~/Views/Shared/_Layout_user.cshtml";
 }
-
+<script src="~/js/ckeditor/ckeditor.js"></script>
 
 <section class="accomodation_area section_gap">
+    @{ int i = 0;}
     <div class="container">
         <div class="section_title text-center">
             <h3 class="title_color"><span>Rezervasyonlarım</span></h3>
         </div>
         <div class="row mb-5">
-            <div class="col-4">
-                <div class="col-12">
-                    @foreach (var reservation in Model.Reservations)
+            <div class="col-12">
+                @foreach (var reservation in Model.Reservations)
+                {
+                    i++;
+                    @using (Html.BeginForm("YorumKaydet", "User", FormMethod.Post, new { @class = "", @enctype = "multipart/form-data" }))
                     {
-                        <span>@reservation.Total </span>
+                        <div class="col-12">
+                            <div class="accomodation_item text-center">
+                                <h6><small>@reservation.Hotel.Title</small></h6>
+                                <h6><small>@reservation.Room.Title</small></h6>
+                                <h6><small>@reservation.Total ₺</small></h6>
+                                <h6><small>@reservation.Startdate.Value.ToShortDateString() - @reservation.Enddate.Value.ToShortDateString()</small></h6>
+                                @if (reservation.Checkout == true)
+                                {
+                                    <textarea asp-for="comment" id="comment_@i"></textarea>
+                                    <button type="submit" class="btn theme_btn button_hover"><h4 class="sec_h4">Yorum Yap</h4></button>
+                                    <script>
+                                        CKEDITOR.replace("comment_@i");
+                                    </script>
+                                }
+                                <input type="hidden" asp-for="hotelId" value="@reservation.HotelId" />
+                                <input type="hidden" asp-for="roomId" value="@reservation.RoomId" />
+                                <input type="hidden" asp-for="userId" value="@reservation.UserId" />
+                            </div>
+                        </div>
                     }
-                </div>
+                }
             </div>
         </div>
     </div>

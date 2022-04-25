@@ -9,6 +9,12 @@ namespace TezProjesi.Models
 {
     public partial class User
     {
+        public User()
+        {
+            Comments = new HashSet<Comments>();
+            Reservation = new HashSet<Reservation>();
+        }
+
         public int Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
@@ -19,5 +25,8 @@ namespace TezProjesi.Models
         public DateTime? UpdatedAt { get; set; }
         public int? UserType { get; set; }
         public string Phone { get; set; }
+
+        public virtual ICollection<Comments> Comments { get; set; }
+        public virtual ICollection<Reservation> Reservation { get; set; }
     }
 }

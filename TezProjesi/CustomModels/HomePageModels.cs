@@ -9,9 +9,10 @@ namespace TezProjesi.CustomModels
     {
         public List<Hotel> HotelList { get; set; }
         public List<Faq> FaqList { get; set; }
-        public List<Comment> CommentList { get; set; }
+        public List<Comments> CommentList { get; set; }
         public List<Room> RoomList { get; set; }
         public ReservationCRUD reservation { get; set; }
+        public List<Hotel> RandomList { get; set; }
     }
     public class ReservationCRUD
     {

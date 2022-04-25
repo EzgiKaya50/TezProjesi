@@ -1,8 +1,152 @@
-﻿
+﻿@model TezProjesi.CustomModels.CalendarModel
 @{
     ViewData["Title"] = "Calendar";
     Layout = "~/Views/Shared/_Layout_admin.cshtml";
 }
 
-<h1>Calendar</h1>
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card text-left">
+            <div class="card-body">
+                <nav>
+                    <div class="nav nav-tabs" id="companyDetail" role="tablist">
+                        <button class="nav-link active" id="checkin-tab" data-toggle="tab" data-target="#checkin-content" type="button" role="tab" aria-controls="nav-home" aria-selected="true"><i class="nav-icon i-Dollar-Sign mr-1"></i>Check-in</button>
+                        <button class="nav-link" id="checkout-tab" data-toggle="tab" data-target="#checkout-content" type="button" role="tab" aria-controls="nav-profile" aria-selected="false"><i class="nav-icon i-MaleFemale mr-1"></i> Check-out</button>
+                        <button class="nav-link" id="finished-tab" data-toggle="tab" data-target="#finished-content" type="button" role="tab" aria-controls="nav-profile" aria-selected="false"><i class="nav-icon i-MaleFemale mr-1"></i> Bitenler</button>
+                    </div>
+                </nav>
+                <div class="tab-content" id="companyDetailContent">
+                    <div class="tab-pane fade show active" id="checkin-content" role="tabpanel" aria-labelledby="home-icon-tab">
+                        <div class="table-responsive">
+                            <table id="tbl_Checkin" class="display table table-striped table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Müşteri</th>
+                                        <th scope="col">Otel</th>
+                                        <th scope="col">Oda</th>
+                                        <th scope="col">Tarih</th>
+                                        <th scope="col" class="text-center"><span class="small">Check-in</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        int index = 0;
+                                    }
+                                    @foreach (var checkin in Model.checkinList)
+                                    {
+                                        index++;
+                                        <tr class="@checkin.Id">
+                                            <th scope="row">@index</th>
+                                            <td>@checkin.User.Name @checkin.User.Surname</td>
+                                            <td>@checkin.Hotel.Title</td>
+                                            <td>@checkin.Room.Title</td>
+                                            <td>@checkin.Startdate.Value.ToShortDateString() - @checkin.Enddate.Value.ToShortDateString()</td>
+                                            <td class="text-center">
+                                                <a title="Check-in" href="@Url.Action("Checkin","Admin",new {reservationId = checkin.Id  })" class="text-success">
+                                                    <i class="fas fa-pen"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
 
+                    </div>
+
+                    <div class="tab-pane fade" id="checkout-content" role="tabpanel" aria-labelledby="profile-icon-tab">
+                        <div class="table-responsive">
+                            <table id="tbl_Checkout" class="display table table-striped table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Müşteri</th>
+                                        <th scope="col">Otel</th>
+                                        <th scope="col">Oda</th>
+                                        <th scope="col">Tarih</th>
+                                        <th scope="col" class="text-center"><span class="small">Check-in</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        int indexx = 0;
+                                    }
+                                    @foreach (var checkin in Model.checkoutList)
+                                    {
+                                        indexx++;
+                                        <tr class="@checkin.Id">
+                                            <th scope="row">@indexx</th>
+                                            <td>@checkin.User.Name @checkin.User.Surname</td>
+                                            <td>@checkin.Hotel.Title</td>
+                                            <td>@checkin.Room.Title</td>
+                                            <td>@checkin.Startdate.Value.ToShortDateString() - @checkin.Enddate.Value.ToShortDateString()</td>
+                                            <td class="text-center">
+                                                <a title="Check-out" href="@Url.Action("Checkout","Admin",new {reservationId = checkin.Id  })" class="text-success">
+                                                    <i class="fas fa-pen"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="finished-content" role="tabpanel" aria-labelledby="profile-icon-tab">
+                        <div class="table-responsive">
+                            <table id="tbl_finished" class="display table table-striped table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Müşteri</th>
+                                        <th scope="col">Otel</th>
+                                        <th scope="col">Oda</th>
+                                        <th scope="col">Tarih</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        int indexxx = 0;
+                                    }
+                                    @foreach (var checkin in Model.finishedList)
+                                    {
+                                        indexxx++;
+                                        <tr class="@checkin.Id">
+                                            <th scope="row">@indexxx</th>
+                                            <td>@checkin.User.Name @checkin.User.Surname</td>
+                                            <td>@checkin.Hotel.Title</td>
+                                            <td>@checkin.Room.Title</td>
+                                            <td>@checkin.Startdate.Value.ToShortDateString() - @checkin.Enddate.Value.ToShortDateString()</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $("#tbl_finished").DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false,
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    });
+</script>
+<script>
+    $(function () {
+        $("#tbl_Checkout").DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false,
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    });
+</script>
+<script>
+    $(function () {
+        $("#tbl_Checkin").DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false,
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    });
+</script>

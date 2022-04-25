@@ -11,7 +11,9 @@ namespace TezProjesi.Models
     {
         public Hotel()
         {
+            Comments = new HashSet<Comments>();
             Image = new HashSet<Image>();
+            Reservation = new HashSet<Reservation>();
             Room = new HashSet<Room>();
         }
 
@@ -34,7 +36,9 @@ namespace TezProjesi.Models
         public DateTime? CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
 
+        public virtual ICollection<Comments> Comments { get; set; }
         public virtual ICollection<Image> Image { get; set; }
+        public virtual ICollection<Reservation> Reservation { get; set; }
         public virtual ICollection<Room> Room { get; set; }
     }
 }

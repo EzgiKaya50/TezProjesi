@@ -26,7 +26,7 @@ namespace TezProjesi.Controllers
     public class AdminController : Controller
     {
         private readonly TezContext _context;
-       
+
         public AdminController(TezContext context)
         {
             _context = context;
@@ -39,7 +39,7 @@ namespace TezProjesi.Controllers
             DashboardModels model = new DashboardModels();
             model.CategoryCount = _context.Category.Where(c => c.Status == true).Count();
             model.HotelCount = _context.Hotel.Where(c => c.Status == true).Count();
-            model.CommentCount = _context.Comment.Where(c => c.Status == true).Count();
+            model.CommentCount = _context.Comments.Where(c => c.Status == true).Count();
             model.MessageCount = _context.Message.Where(c => c.Status == true).Count();
             return View(model);
         }
@@ -48,7 +48,14 @@ namespace TezProjesi.Controllers
         {
             var claimsIdentity = HttpContext.User.Identity as ClaimsIdentity;
             var userName = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
-            return View();
+            CalendarModel model = new CalendarModel()
+            {
+                checkinList = _context.Reservation.Where(c => c.Status == true && c.Checkin == false && c.Checkout == false).Include(c => c.Hotel).Include(c => c.User).Include(c => c.Room).ToList(),
+                checkoutList = _context.Reservation.Where(c => c.Status == true && c.Checkin == true && c.Checkout == false).Include(c => c.Hotel).Include(c => c.User).Include(c => c.Room).ToList(),
+                finishedList = _context.Reservation.Where(c => c.Status == true && c.Checkin == true && c.Checkout == true).Include(c => c.Hotel).Include(c => c.User).Include(c => c.Room).ToList(),
+            };
+
+            return View(model);
         }
         [Authorize(Roles = "Admin")]
         public ActionResult Categories()
@@ -74,7 +81,7 @@ namespace TezProjesi.Controllers
             var claimsIdentity = HttpContext.User.Identity as ClaimsIdentity;
             var userName = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
             CommentPage model = new CommentPage();
-            model.CommentList = _context.Comment.Where(c => c.Status == true).ToList();
+            model.CommentList = _context.Comments.Where(c => c.Status == true).ToList();
             return View(model);
         }
         [Authorize(Roles = "Admin")]
@@ -117,7 +124,7 @@ namespace TezProjesi.Controllers
             var claimsIdentity = HttpContext.User.Identity as ClaimsIdentity;
             var userName = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
             FaqPage model = new FaqPage();
-            model.FaqCRUD = _context.Faq.FirstOrDefault(c=>c.Id==faqId);
+            model.FaqCRUD = _context.Faq.FirstOrDefault(c => c.Id == faqId);
             return View(model);
 
         }
@@ -293,7 +300,7 @@ namespace TezProjesi.Controllers
 
 
 
-            return RedirectToAction("Categories","Admin");
+            return RedirectToAction("Categories", "Admin");
         }
         [Authorize(Roles = "Admin")]
         public ActionResult KategoriSil(int categoryId)
@@ -374,6 +381,7 @@ namespace TezProjesi.Controllers
             RoomPage model = new RoomPage();
             model.RoomList = _context.Room.Where(c => c.Status == true).ToList();
             model.HotelList = _context.Hotel.Where(c => c.Status == true).ToList();
+            model.RoomType = new RoomType();
             return View(model);
         }
         [Authorize(Roles = "Admin")]
@@ -413,6 +421,7 @@ namespace TezProjesi.Controllers
             RoomPage model = new RoomPage();
             model.RoomCRUD = _context.Room.FirstOrDefault(c => c.Id == roomId);
             model.HotelList = _context.Hotel.Where(c => c.Status == true).ToList();
+            model.RoomType = new RoomType();
             return View(model);
         }
         [Authorize(Roles = "Admin")]
@@ -428,7 +437,7 @@ namespace TezProjesi.Controllers
             existRooms.Price = model.RoomCRUD.Price;
             existRooms.Title = model.RoomCRUD.Title;
             existRooms.Type = model.RoomCRUD.Type;
-            existRooms.Description = model.RoomCRUD.Description;        
+            existRooms.Description = model.RoomCRUD.Description;
             existRooms.UpdatedAt = DateTime.Now;
             _context.Entry(existRooms).State = EntityState.Modified;
             _context.SaveChanges();
@@ -472,7 +481,7 @@ namespace TezProjesi.Controllers
             var claimsIdentity = HttpContext.User.Identity as ClaimsIdentity;
             var userName = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
             GaleriPage model = new GaleriPage();
-            model.ImageCRUD = _context.Image.FirstOrDefault(c=> c.Id==GaleriId);
+            model.ImageCRUD = _context.Image.FirstOrDefault(c => c.Id == GaleriId);
             model.HotelList = _context.Hotel.ToList();
             return View(model);
         }
@@ -564,7 +573,7 @@ namespace TezProjesi.Controllers
             var userName = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
             RoomGaleriPage model = new RoomGaleriPage();
             model.ImageList = _context.RoomImages.Include(c => c.Room).ThenInclude(c => c.Hotel).ToList();
-            model.RoomList = _context.Room.Include(c=> c.Hotel).Where(c => c.Status == true).ToList();
+            model.RoomList = _context.Room.Include(c => c.Hotel).Where(c => c.Status == true).ToList();
             return View(model);
         }
         public ActionResult OdaFotografEkle()
@@ -573,9 +582,9 @@ namespace TezProjesi.Controllers
             var userName = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
             RoomGaleriPage model = new RoomGaleriPage();
             model.RoomImgCRUD = new RoomImages();
-            model.RoomList = _context.Room.Where(c => c.Status == true).Include(c=> c.Hotel).ToList();
+            model.RoomList = _context.Room.Where(c => c.Status == true).Include(c => c.Hotel).ToList();
 
-            foreach(var room in model.RoomList)
+            foreach (var room in model.RoomList)
             {
                 room.Title = room.Title + "/" + room.Hotel.Title;
             }
@@ -679,6 +688,31 @@ namespace TezProjesi.Controllers
             _context.SaveChanges();
             return RedirectToAction("RoomGaleri", "Admin");
         }
+
+        public ActionResult Checkin(int reservationId)
+        {
+            var claimsIdentity = HttpContext.User.Identity as ClaimsIdentity;
+            var userName = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+            var existreservation = _context.Reservation.FirstOrDefault(c => c.Id == reservationId);
+            existreservation.Checkin = true;
+            existreservation.UpdatedAt = DateTime.Now;
+            _context.Entry(existreservation).State = EntityState.Modified;
+            _context.SaveChanges();
+            return RedirectToAction("Calendar", "Admin");
+        }
+
+        public ActionResult Checkout(int reservationId)
+        {
+            var claimsIdentity = HttpContext.User.Identity as ClaimsIdentity;
+            var userName = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+            var existreservation = _context.Reservation.FirstOrDefault(c => c.Id == reservationId);
+            existreservation.Checkout = true;
+            existreservation.UpdatedAt = DateTime.Now;
+            _context.Entry(existreservation).State = EntityState.Modified;
+            _context.SaveChanges();
+            return RedirectToAction("Calendar", "Admin");
+        }
+
         public ActionResult KategoriKaydet(YeniKategoriEklePage model)
         {
             var claimsIdentity = HttpContext.User.Identity as ClaimsIdentity;
@@ -712,7 +746,7 @@ namespace TezProjesi.Controllers
             model.CategoryCRUD.UpdatedAt = DateTime.Now;
             _context.Category.Add(model.CategoryCRUD);
             _context.SaveChanges();
-            return RedirectToAction("Categories","Admin");
+            return RedirectToAction("Categories", "Admin");
         }
         [Authorize(Roles = "Admin")]
         public ActionResult OtelKaydet(HotelPage model)
@@ -739,7 +773,7 @@ namespace TezProjesi.Controllers
             _context.Setting.Add(model.SettingCRUD);
             _context.SaveChanges();
             return RedirectToAction("Setting", "Admin");
-             
+
         }
         [Authorize(Roles = "Admin")]
         public ActionResult Privacy()
