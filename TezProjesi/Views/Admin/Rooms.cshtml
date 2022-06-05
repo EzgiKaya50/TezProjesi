@@ -20,6 +20,7 @@
                 <th scope="col">Adet</th>
                 <th scope="col">Fiyat</th>
                 <th scope="col">Tür</th>
+                <th scope="col">Galeri</th>
                 <th scope="col" class="text-center">
                     <span class="small">
                         <span class="text-success">Düzenle</span> |
@@ -40,6 +41,11 @@
                 <td>@Room.Adet</td>
                 <td>@Room.Price</td>
                 <td>@Model.RoomType.Type.FirstOrDefault(c => c.Value == Room.Type.ToString()).Text</td>
+                <td>
+                    <a title="Galeri" href="javascript:;" onclick="getImages('@Room.Id')" class="text-info">
+                        <i class="fas fa-image"></i>
+                    </a>
+                </td>
                 <td scope="col" class="text-center">
                     <a title="Düzenle" href="@Url.Action("OdaGuncelle","Admin",new {RoomId = Room.Id  })" class="text-success">
                         <i class="fas fa-pen"></i>
@@ -53,11 +59,38 @@
         </tbody>
     </table>
 </div>
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog  modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Galeri</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modal_gallery">
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     $(function () {
         $("#Room_table").DataTable({
             "responsive": true, "lengthChange": false, "autoWidth": false,
         }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     });
+
+    function getImages(roomId) {
+        $.ajax({
+            type: "GET",
+            url: "/Admin/GetRoomImages",
+            data: { roomId: roomId },
+            success: function (data) {
+                $('#modal_gallery').html(data);
+                $('#exampleModalCenter').modal('show');
+            }
+        });
+    }
 </script>
 

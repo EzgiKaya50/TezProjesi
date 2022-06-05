@@ -1,33 +1,80 @@
 ﻿@model Hotel
+@using TezProjesi.Resources
 @{
     ViewData["Title"] = "OtelDetay";
     Layout = "~/Views/Shared/_Layout_user.cshtml";
 }
+
 <section class="testimonial_area section_gap">
     <div class="container">
         <div class="section_title text-center">
             <h2 class="title_color">@Model.Title</h2>
             <p>@Model.Address  @Model.Phone</p>
         </div>
-        <div class="testimonial_slider owl-carousel">
 
-            @foreach (var Room in Model.Room.Where(c => c.Status == true))
-            {
-                @foreach (var RoomImg in Room.RoomImages)
-                {
-                    <div class="col-12">
-                        <div class="accomodation_item text-left">
-                            <div class="hotel_img">
-                                <img src="~/RoomImg/@RoomImg.RoomImg" style="width:300px !important; height:auto;" />
-                                <a class="btn theme_btn button_hover text-white">@Room.Price ₺</a>
+        @foreach (var Room in Model.Room.Where(c => c.Status == true))
+        {
+            <div class="col-12 mb-5">
+                <div class="row">
+                    <div class="col-6">
+                        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                            <div class="carousel-inner">
+                                @{int index = 0; }
+                                @foreach (var room in Room.RoomImages)
+                                {
+                                    @if (index == 0)
+                                    {
+                                        <div class="carousel-item active">
+                                            <img src="~/RoomImg/@room.RoomImg" class="d-block w-100" alt="...">
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="carousel-item">
+                                            <img src="~/RoomImg/@room.RoomImg" class="d-block w-100" alt="...">
+                                        </div>
+                                    }
+                                    index++;
+                                }
+
+
                             </div>
-                            <h6><small></small></h6>
+                            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
                         </div>
                     </div>
-                }
-            }
-        </div>
+                    <div class="col-6">
+                        <h4>Oda : @Room.Title</h4>
+                        <h5>Yetişkin : @Room.Adult</h5>
+                        <h5>Çocuk : @Room.Children</h5>
+                        <h5>Gecelik Fiyat : @Room.Price ₺</h5>
+                        <div class="input-group mt-3">
+                            <input type='date' class="form-control" id="StartroomId_@Room.Id" required placeholder="Giriş Tarihi" />
+                        </div>
+                        <div class="input-group mt-3">
+                            <input type='date' class="form-control" id="EndroomId_@Room.Id" required placeholder="Çıkış Tarihi" />
+                        </div>
+                        <a class="book_now_btn button_hover mt-3" href="javascript:;" onclick="FncReservation('@Room.HotelId', '@Room.Id', '@Room.Adult', '@Room.Children')">@Resource.rezervasyonyap</a>
+                    </div>
+                </div>
+            </div>
+
+        }
     </div>
 </section>
+
+<script>
+    function FncReservation(hotelId, roomId, adult, children) {
+        var startDate = document.getElementById('StartroomId_' + roomId).value;
+        var endDate = document.getElementById('EndroomId_' + roomId).value;
+        window.location = '/User/OdemeSayfasi?startDate=' + startDate + '&endDate=' + endDate + '&children=' + children + '&adults=' + adult + "&hotelID=" + hotelId + '&roomID=' + roomId ;
+    }
+</script>
 
 

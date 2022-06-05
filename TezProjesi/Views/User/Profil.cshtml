@@ -1,74 +1,94 @@
 ﻿@model TezProjesi.CustomModels.ProfilModels
+@using TezProjesi.Resources
 @{
     ViewData["Title"] = "Profil";
     Layout = "~/Views/Shared/_Layout_user.cshtml";
 }
 
-<section class="accomodation_area section_gap">
+<section class="facilities_area section_gap">
+    <div class="overlay bg-parallax" data-stellar-ratio="0.8" data-stellar-vertical-offset="0" data-background="">
+    </div>
     <div class="container">
-        <div class="section_title text-center">
-            <h3 class="title_color"><span>Profil</span></h3>
+        <div class="row mb_30">
+            <div class="container">
+                <div class="section">
+                    <h3 class="mb-30 title_w">@Resource.profil</h3>
+                    <div class="row">
+                        <div class="col-md-3">
+                            @if (Model.Profile.Image == null)
+                            {
+                                <img src="~/ProfilePictures/default.png" class="img-fluid" />
+                            }
+                            else
+                            {
+                                <img src="~/ProfilePictures/@Model.Profile.Image" class="img-fluid" />
+
+                            }
+                        </div>
+
+                        <div class="col-md-9 mt-sm-20 left-align-p">
+                            @using (Html.BeginForm("ProfilGuncelleKaydet", "User", FormMethod.Post, new { @class = "", @enctype = "multipart/form-data" }))
+                            {
+                                <div class="row">
+
+                                    @Html.HiddenFor(c => c.User.Id)
+                                    @Html.HiddenFor(c => c.Profile.Id)
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="facilities_item">
+                                            <h4 class="sec_h4 pb-2"><i class="lnr lnr-user"></i>@Resource.isim</h4>
+                                            @Html.TextBoxFor(c => c.User.Name, null, new { @class = "form-control pt-0", @id = "name", @placeholder = "İsim", @required = "true", @maxlenght = "50" })
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="facilities_item">
+                                            <h4 class="sec_h4"><i class="lnr lnr-user"></i>@Resource.soyad</h4>
+                                            @Html.TextBoxFor(c => c.User.Surname, null, new { @class = "form-control", @id = "surname", @placeholder = "Soyad", @required = "true", @maxlenght = "50" })
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="facilities_item">
+                                            <h4 class="sec_h4"><i class="lnr lnr-lock"></i>@Resource.sifre</h4>
+                                            @Html.TextBoxFor(c => c.User.Password, null, new { @class = "form-control", @id = "name", @placeholder = "İsim", @required = "true", @maxlenght = "50", @type = "password" })
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="facilities_item">
+                                            <h4 class="sec_h4"><i class="lnr lnr-envelope"></i>@Resource.email</h4>
+                                            @Html.TextBoxFor(c => c.User.Email, null, new { @class = "form-control", @id = "email", @placeholder = "Email", @required = "true", @maxlenght = "50" })
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="facilities_item">
+                                            <h4 class="sec_h4"><i class="lnr lnr-phone-handset"></i>@Resource.telefon</h4>
+                                            @Html.TextBoxFor(c => c.User.Phone, null, new { @class = "form-control", @id = "phone", @placeholder = "Telefon", @required = "true", @maxlenght = "50" })
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="facilities_item">
+                                            <h4 class="sec_h4"><i class="lnr lnr-location"></i>@Resource.adres</h4>
+                                            @Html.TextBoxFor(c => c.Profile.Address, null, new { @class = "form-control", @id = "adress", @placeholder = "Adres", @required = "true", @maxlenght = "50" })
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" class="btn theme_btn button_hover"><h4 class="sec_h4">@Resource.kaydet</h4></button>
+
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-       <div class="row mb-5" >
-           <div class="col-4">
-               <div class="col-12">
-                   @if (Model.Profile.Image == null)
-                   {
-                       <img src="~/ProfilePictures/default.png" style="height:150px" />
-                   }
-            else
-            {
-               <img src="~/ProfilePictures/@Model.Profile.Image" style="height:150px" />
-
-            }
-
-                   <table class="mt-3">
-                       <tbody>
-                           <tr>
-                               <th>
-                                   İsim :
-                               </th>
-                               <td>
-                                   <span> @Model.User.Name</span>
-                               </td>
-                           </tr>
-                           <tr>
-                               <th>
-                                   Soyisim :
-                               </th>
-                               <td>
-                                   <span> @Model.User.Surname</span>
-                               </td>
-                           </tr>
-                           <tr>
-                               <th>
-                                   E-mail :
-                               </th>
-                               <td>
-                                   <span> @Model.User.Email</span>
-                               </td>
-                           </tr>
-                           <tr>
-                               <th>
-                                   Adres :
-                               </th>
-                               <td>
-                                   <span> @Model.Profile.Address</span>
-                               </td>
-                           </tr>
-                           <tr>
-                               <th>
-                                   Telefon :
-                               </th>
-                               <td>
-                                   <span> @Model.Profile.Phone</span>
-                               </td>
-                           </tr>
-                       </tbody>
-                   </table>
-               </div>
-           </div>
-       </div>
     </div>
 </section>
+<div class="row mb-5">
+    <div class="col-4">
+        <div class="col-12">
+            @using (Html.BeginForm("ProfilGuncelleKaydet", "User", FormMethod.Post, new { @class = "", @enctype = "multipart/form-data" }))
+            {
+            }
+        </div>
+    </div>
+</div>
+
 

@@ -17,5 +17,23 @@ namespace TezProjesi.CustomModels
             public List<Category> CategoryList { get; set; }
 
         }
+
+        public class Payment
+        {
+            public double totalPrice { get; set; }
+            public string hotelName { get; set; }
+            public int hotelID { get; set; }
+            public string roomName { get; set; }
+            public int roomID { get; set; }
+            public DateTime startDate { get; set; }
+            public DateTime endDate { get; set; }
+            public int adult { get; set; }
+            public int children { get; set; }
+            public string cardNo { get; set; }
+            public string cvv { get; set; }
+            public int? cardMonth { get; set; }
+            public int? cardYear { get; set; }
+            public string cardNameSurname { get; set; }
+        }
     }
 }

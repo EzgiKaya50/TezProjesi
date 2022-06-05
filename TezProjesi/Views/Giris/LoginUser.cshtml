@@ -1,4 +1,5 @@
 ﻿@model TezProjesi.Models.LoginModel;
+@using TezProjesi.Resources
 @{
     ViewData["Title"] = "LoginUser";
     Layout = null;
@@ -8,7 +9,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Giriş Yap</title>
+    <title>@Resource.girisyap</title>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link rel="stylesheet" href="~/plugins/fontawesome-free/css/all.min.css">
@@ -20,10 +21,10 @@
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
                 <a href="../../index2.html" class="h1"><b>EBG</b> Tur</a> <br />
-                <h2>Giriş Yap</h2>
+                <h2>@Resource.girisyap</h2>
             </div>
             <div class="card-body">
-                <p class="login-box-msg"> Giriş Yap</p>
+                <p class="login-box-msg">@Resource.girisyap</p>
 
                 @using (Html.BeginForm("UserLogin", "Giris", FormMethod.Post))
                 {
@@ -45,21 +46,21 @@
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <button type="submit" class="btn btn-primary btn-block">Giriş Yap</button>
+                            <button type="submit" class="btn btn-primary btn-block">@Resource.girisyap</button>
                         </div>
                     </div>
                 }
-                    <br />
-                    <div class="row">
-                        <div class="col-12">
-                            <a href="@Url.Action("Kaydol","User")" class="btn btn-primary btn-block">Kaydol</a>
-                        </div>
-                    </div>
-                    <br />
+                <br />
+                <div class="row">
                     <div class="col-12">
-                        <p class="text-danger">@ViewBag.Message</p>
+                        <a href="@Url.Action("Kaydol","User")" class="btn btn-primary btn-block">@Resource.kaydol</a>
                     </div>
-                
+                </div>
+                <br />
+                <div class="col-12">
+                    <p class="text-danger">@ViewBag.Message</p>
+                </div>
+
 
             </div>
         </div>

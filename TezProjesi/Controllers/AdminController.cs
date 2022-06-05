@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using static TezProjesi.CustomModels.GaleriModels;
 using static TezProjesi.CustomModels.RoomGaleriModels;
+using System.Collections.Generic;
 
 namespace TezProjesi.Controllers
 {
@@ -567,6 +568,17 @@ namespace TezProjesi.Controllers
             _context.SaveChanges();
             return RedirectToAction("Galeri", "Admin");
         }
+
+        public ActionResult FotografSil2(int GaleriId)
+        {
+            var claimsIdentity = HttpContext.User.Identity as ClaimsIdentity;
+            var userName = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+            var existImage = _context.Image.FirstOrDefault(c => c.Id == GaleriId);
+            _context.Image.Remove(existImage);
+            _context.SaveChanges();
+            return RedirectToAction("Hotels", "Admin");
+        }
+
         public ActionResult RoomGaleri()
         {
             var claimsIdentity = HttpContext.User.Identity as ClaimsIdentity;
@@ -689,6 +701,16 @@ namespace TezProjesi.Controllers
             return RedirectToAction("RoomGaleri", "Admin");
         }
 
+        public ActionResult OdaFotografSil2(int RoomGaleriId)
+        {
+            var claimsIdentity = HttpContext.User.Identity as ClaimsIdentity;
+            var userName = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+            var existRoomImg = _context.RoomImages.FirstOrDefault(c => c.Id == RoomGaleriId);
+            _context.RoomImages.Remove(existRoomImg);
+            _context.SaveChanges();
+            return RedirectToAction("Rooms", "Admin");
+        }
+
         public ActionResult Checkin(int reservationId)
         {
             var claimsIdentity = HttpContext.User.Identity as ClaimsIdentity;
@@ -790,5 +812,20 @@ namespace TezProjesi.Controllers
         {
             return View();
         }
+
+        public async Task<IActionResult> GetHotelImages(int hotelId)
+        {
+
+            List<Image> hotelImages = await _context.Image.Where(c => c.HotelId == hotelId).ToListAsync();
+            return PartialView("~/Views/Admin/_hotelImages.cshtml", hotelImages);
+        }
+
+        public async Task<IActionResult> GetRoomImages(int roomId)
+        {
+
+            List<RoomImages> roomImages = await _context.RoomImages.Where(c => c.RoomId == roomId).ToListAsync();
+            return PartialView("~/Views/Admin/_roomImages.cshtml", roomImages);
+        }
+
     }
 }

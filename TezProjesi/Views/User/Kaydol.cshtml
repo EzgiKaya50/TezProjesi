@@ -1,4 +1,5 @@
 ﻿@model TezProjesi.Models.User;
+@using TezProjesi.Resources
 @{
     ViewData["Title"] = "Kaydol";
     Layout = null;
@@ -9,7 +10,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Giriş Yap</title>
+    <title>@Resource.girisyap</title>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link rel="stylesheet" href="~/plugins/fontawesome-free/css/all.min.css">
@@ -21,15 +22,15 @@
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
                 <a href="../../index2.html" class="h1"><b>EBG</b> Tur</a> <br />
-                <h2>Giriş Yap</h2>
+                <h2>@Resource.girisyap</h2>
             </div>
             <div class="card-body">
-                <p class="login-box-msg"> Giriş Yap</p>
+                <p class="login-box-msg">@Resource.girisyap</p>
 
                 @using (Html.BeginForm("KayitOlustur", "User", FormMethod.Post))
                 {
                     <div class="input-group mb-3">
-                        @Html.TextBoxFor(m => m.Name, null, new { @class = "form-control", @required = true, @id = "name", @placeholder = "Ad" })
+                        @Html.TextBoxFor(m => m.Name, null, new { @class = "form-control", @required = true, @id = "name", @placeholder = Resource.isim })
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
@@ -37,7 +38,7 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        @Html.TextBoxFor(m => m.Surname, null, new { @class = "form-control", @required = true, @id = "surname", @placeholder = "Soyad" })
+                        @Html.TextBoxFor(m => m.Surname, null, new { @class = "form-control", @required = true, @id = "surname", @placeholder = Resource.soyad })
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
@@ -45,7 +46,7 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        @Html.TextBoxFor(m => m.Email, null, new { @class = "form-control", @required = true, @id = "e-posta", @placeholder = "E-posta" ,@type="email"})
+                        @Html.TextBoxFor(m => m.Email, null, new { @class = "form-control", @required = true, @id = "e-posta", @placeholder = Resource.email, @type = "email" })
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
@@ -53,7 +54,7 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        @Html.TextBoxFor(m => m.Password, null, new { @class = "form-control", @required = true, @id = "password", @placeholder = "Şifre", @type = "password" })
+                        @Html.TextBoxFor(m => m.Password, null, new { @class = "form-control", @required = true, @id = "password", @placeholder = Resource.sifre, @type = "password" })
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
@@ -62,7 +63,7 @@
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <button type="submit" class="btn btn-primary btn-block">Kaydol</button>
+                            <button type="submit" class="btn btn-primary btn-block">@Resource.kaydol</button>
                         </div>
                     </div>
                     <br />

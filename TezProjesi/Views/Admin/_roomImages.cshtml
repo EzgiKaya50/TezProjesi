@@ -1,0 +1,35 @@
+﻿@model List<TezProjesi.Models.RoomImages>
+
+<div class="table-responsive">
+    <table id="Image_table" class="display table table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Başlık</th>
+                <th scope="col">Fotoğraf</th>
+                <th scope="col" class="text-center">
+                    <span class="small">
+                        <span class="text-danger">Sil</span>
+                    </span>
+                </th>
+            </tr>
+        </thead>
+        @{ var cardIndx = 0; }
+        <tbody>
+            @foreach (var Room in Model)
+            {
+                cardIndx++;
+                <tr class="@Room.Id">
+                    <th scope="row">@cardIndx</th>
+                    <td>@Room.Title</td>
+                    <td><img src="~/RoomImg/@Room.RoomImg" style="height:200px" /></td>
+                    <td scope="col" class="text-center">
+                        <a title="Sil" class="text-danger" href="@Url.Action("OdaFotografSil2","Admin",new {RoomGaleriId = Room.Id  })" onclick="return confirm('Silmek istediğinize emin misiniz?')">
+                            <i class="fas fa-ban"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

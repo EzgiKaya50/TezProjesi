@@ -1,0 +1,69 @@
+﻿@model TezProjesi.CustomModels.HotelModels.Payment
+@{
+    ViewData["Title"] = "Ödeme Sayfası";
+    Layout = "~/Views/Shared/_Layout_user.cshtml";
+}
+
+<section class="accomodation_area section_gap">
+    <div class="container">
+        <div class="section_title text-center">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered">
+                            <tr>
+                                <th>Otel</th>
+                                <th>Oda</th>
+                                <th>Yetişkin</th>
+                                <th>Çocuk</th>
+                                <th>Tarih</th>
+                                <th>Toplam Fiyat</th>
+                            </tr>
+                            <tr>
+                                <td>@Model.hotelName</td>
+                                <td>@Model.roomName</td>
+                                <td>@Model.adult</td>
+                                <td>@Model.children</td>
+                                <td>@Model.startDate.ToShortDateString() - @Model.endDate.ToShortDateString()</td>
+                                <td>@Model.totalPrice ₺</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                    @using (Html.BeginForm("SaveReservation", "User", FormMethod.Post, new { @class = "", @enctype = "multipart/form-data" }))
+                    {
+                        <input type="hidden" asp-for="hotelID" />
+                        <input type="hidden" asp-for="roomID" />
+                        <input type="hidden" asp-for="adult" />
+                        <input type="hidden" asp-for="children" />
+                        <input type="hidden" asp-for="startDate" />
+                        <input type="hidden" asp-for="endDate" />
+                        <label for="">Kartın Üzerindeki Ad Soyad</label>
+                        <input type="text" asp-for="cardNameSurname" class="form-control mb-2" placeholder="Kartın Üzerindeki Ad Soyad" />
+                        <label for="">Kart Numarası</label>
+                        <input type="tel" asp-for="cardNo" class="form-control mb-2" placeholder="Kart Numarası" maxlength="18" />
+
+                        <div class="row mb-2">
+                            <div class="col-md-4">
+                                <label for="">Ay</label>
+                                <input type="tel" asp-for="cardMonth" class="form-control" maxlength="2" placeholder="Ay" />
+                            </div>
+                            <div class="col-md-4">
+                                <label for="">Yıl</label>
+                                <input type="tel" asp-for="cardYear" class="form-control" maxlength="2" placeholder="Yıl" />
+                            </div>
+                            <div class="col-md-4">
+                                <label for="">CVV2</label>
+                                <input type="tel" asp-for="cvv" class="form-control" maxlength="3" placeholder="CVV2" />
+                            </div>
+
+                        </div>
+                        <button class="book_now_btn button_hover mt-3" type="submit">Ödeme Yap</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

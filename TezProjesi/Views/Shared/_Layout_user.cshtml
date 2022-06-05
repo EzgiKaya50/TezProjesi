@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Http
 @using System.Security.Claims;
-
+@using TezProjesi.Resources
+@{var returnUrl = string.IsNullOrEmpty(Context.Request.Path) ? "/" : $"{Context.Request.Path.Value}"; }
 <!doctype html>
 <html lang="en">
 <head>
@@ -37,9 +38,21 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                     <ul class="nav navbar-nav menu_nav ml-auto">
-                        <li class="nav-item active"><a class="nav-link" href="@Url.Action("Index","User")">ANA SAYFA</a></li>
+                        <li class="nav-item mt-3">
+                            <a asp-action="change_language" asp-controller="User" asp-route-returnUrl="@returnUrl" asp-route-culture="tr-TR" data-value="another action">
+                                <i></i>&nbsp;
+                                <img src="~/images/flag-round-250.png" height="50" />
+                            </a>
+                        </li>
+                        <li class="nav-item mt-3">
+                            <a asp-action="change_language" asp-controller="User" asp-route-returnUrl="@returnUrl" asp-route-culture="en" data-value="another action">
+                                <i></i>&nbsp;
+                                <img src="~/images/8a21365d3f89b97fa1ab4804b3adad1d.png" height="50" />
+                            </a>
+                        </li>
+                        <li class="nav-item active"><a class="nav-link" href="@Url.Action("Index","User")">@Resource.anasayfa</a></li>
                         @*<li class="nav-item"><a class="nav-link" href="@Url.Action("Hakkımızda","User")">Hakkımızda</a></li>*@
-                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Oteller","User")">OTELLER</a></li>
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Oteller","User")">@Resource.oteller</a></li>
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="dropdown nav-item">
@@ -47,9 +60,9 @@
                                     @User.Claims.Where(c => c.Type == ClaimTypes.Actor).FirstOrDefault().Value
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="@Url.Action("Profil","User")">Profil</a>
-                                    <a class="dropdown-item" href="@Url.Action("Randevularım","User")">Rezervasyonlarım</a>
-                                    <a class="dropdown-item" href="@Url.Action("CikisYapUser","User")">Çıkış Yap</a>
+                                    <a class="dropdown-item" href="@Url.Action("Profil","User")">@Resource.profil</a>
+                                    <a class="dropdown-item" href="@Url.Action("Randevularım","User")">@Resource.rezervasyonlarım</a>
+                                    <a class="dropdown-item" href="@Url.Action("CikisYapUser","User")">@Resource.cıkısyap</a>
                                 </div>
                             </li>
                             //<li class="nav-item"><a class="nav-link">@User.Claims.Where(c => c.Type == ClaimTypes.Actor).FirstOrDefault().Value</a></li>
@@ -57,7 +70,7 @@
                         else
                         {
 
-                            <li class="nav-item"><a class="nav-link" href="@Url.Action("LoginUser","Giris")">GİRİŞ YAP</a></li>
+                            <li class="nav-item"><a class="nav-link" href="@Url.Action("LoginUser","Giris")">@Resource.girisyap</a></li>
                         }
 
 
@@ -75,12 +88,12 @@
             <div class="row">
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="single-footer-widget">
-                        <h6 class="footer_title">Hızlı Menü</h6>
+                        <h6 class="footer_title">@Resource.hızlımenü</h6>
                         <div class="row">
                             <div class="col-4">
                                 <ul class="list_style">
-                                    <li><a href="#">Ana Sayfa</a></li>
-                                    <li><a href="#">Oteller</a></li>
+                                    <li><a href="#">@Resource.anasayfa</a></li>
+                                    <li><a href="#">@Resource.oteller</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -88,15 +101,19 @@
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="single-footer-widget">
-                        <h6 class="footer_title">Popüler Bölgeler</h6>
+                        <h6 class="footer_title">@Resource.popülerbölgeler</h6>
                         <div class="row">
                             <div class="col-4">
                                 <ul class="list_style">
-                                    <li><a href="#">Antalya Otelleri</a></li>  
-                                    <li><a href="#">Alanya Otelleri</a></li>   <li><a href="#">Belek Otelleri</a></li>
-                                    <li><a href="#">Ağva Otelleri</a></li>     <li><a href="#">Bodrum Otelleri</a></li>
-                                    <li><a href="#">Ayvalık Otelleri</a></li>  <li><a href="#">Bodrum Otelleri</a></li>
-                                    <li><a href="#">Kemer Otelleri</a></li>    <li><a href="#">Bozcaada Otelleri</a></li>
+                                    <li><a href="#">Antalya @Resource.oteller</a></li>
+                                    <li><a href="#">Alanya @Resource.oteller</a></li>
+                                    <li><a href="#">Belek @Resource.oteller</a></li>
+                                    <li><a href="#">Ağva @Resource.oteller</a></li>
+                                    <li><a href="#">Bodrum @Resource.oteller</a></li>
+                                    <li><a href="#">Ayvalık @Resource.oteller</a></li>
+                                    <li><a href="#">Bodrum @Resource.oteller</a></li>
+                                    <li><a href="#">Kemer @Resource.oteller</a></li>
+                                    <li><a href="#">Bozcaada @Resource.oteller</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -107,15 +124,10 @@
             <div class="row footer-bottom d-flex justify-content-between align-items-center">
                 <p class="col-lg-8 col-sm-12 footer-text m-0">
                     <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    Copyright &copy;
-                    <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                 </p>
                 <div class="col-lg-4 col-sm-12 footer-social">
                     <a href="#"><i class="fa fa-facebook"></i></a>
                     <a href="#"><i class="fa fa-twitter"></i></a>
-                    <a href="#"><i class="fa fa-dribbble"></i></a>
-                    <a href="#"><i class="fa fa-behance"></i></a>
                 </div>
             </div>
         </div>
