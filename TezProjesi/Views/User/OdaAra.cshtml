@@ -1,7 +1,8 @@
-﻿@model Hotel
+﻿@model TezProjesi.CustomModels.HomePageModels
 @using TezProjesi.Resources
+
 @{
-    ViewData["Title"] = "OtelDetay";
+    ViewData["Title"] = "Oda Ara";
     Layout = "~/Views/Shared/_Layout_user.cshtml";
 }
 
@@ -9,13 +10,17 @@
     <div class="container">
         <div class="section_title">
             <div class="container">
+                @{
+                    int daydiff = (int)(Model.reservation.enddate - Model.reservation.startdate).TotalDays + 1;
+                }
+
                 <div class="col-12 mb-2">
                     <div class="row">
                         <div class="col-12">
                             <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                                 <div class="carousel-inner" style="height:500px;">
                                     @{int index = 0; }
-                                    @foreach (var img in Model.Image)
+                                    @foreach (var img in Model.hotelInfo.Image)
                                     {
                                         @if (index == 0)
                                         {
@@ -45,7 +50,8 @@
                             </div>
                         </div>
                         <div class="col-12 mt-3 text-center">
-                            <h4>@Resource.otel : @Model.Title</h4>
+                            <h4>@Resource.otel : @Model.hotelInfo.Title</h4>
+                            <h5>@Resource.tarih : @Model.reservation.startdate.ToShortDateString() - @Model.reservation.enddate.ToShortDateString()</h5>
                         </div>
                     </div>
                     <div class="card shadow mb-5 rounded">
@@ -58,7 +64,7 @@
                         </nav>
                         <div class="tab-content p-3" id="nav-tabContent">
                             <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                                @foreach (var Room in Model.Room.Where(c => c.Status == true))
+                                @foreach (var Room in Model.RoomList.Where(c => c.Status == true))
                                 {
                                     <div class="col-12 mb-5">
                                         <div class="row">
@@ -72,13 +78,9 @@
                                                 <h5>@Resource.yetiskin : @Room.Adult</h5>
                                                 <h5>@Resource.cocuk : @Room.Children</h5>
                                                 <h5>@Resource.gecelikfiyat : @Room.Price ₺</h5>
-                                                <div class="input-group mt-3">
-                                                    <input type='date' class="form-control" id="StartroomId_@Room.Id" required placeholder="@Resource.giristarihi" />
-                                                </div>
-                                                <div class="input-group mt-3">
-                                                    <input type='date' class="form-control" id="EndroomId_@Room.Id" required placeholder="@Resource.cıkıstarihi" />
-                                                </div>
-                                                <a class="book_now_btn button_hover mt-3" href="javascript:;" onclick="FncReservation('@Room.HotelId', '@Room.Id', '@Room.Adult', '@Room.Children')">@Resource.rezervasyonyap</a>
+                                                <h5>@Resource.toplamfiyat : @(Room.Price*daydiff) ₺</h5>
+                                                <a class="book_now_btn button_hover" href="@Url.Action("OdemeSayfasi","User", new {startDate = Model.reservation.startdate,endDate= Model.reservation.enddate,children= Model.reservation.children,adults= Model.reservation.adults,hotelID= Model.reservation.HotelID, roomID = Room.Id })">@Resource.rezervasyonyap</a>
+
                                             </div>
                                         </div>
                                     </div>
@@ -86,31 +88,29 @@
                                 }
                             </div>
                             <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                                <p>@Html.Raw(Model.Description)</p>
+                                <p>@Html.Raw(Model.hotelInfo.Description)</p>
                             </div>
-
-
                             <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-
 
                                 <div class="mb-5">
                                     <div class="row">
                                         <div class="d-flex align-items-center justify-content-center text-white text-center" style="background-color: #f8b600; height: 150px; width: 150px; font-size: 2.5rem; font-weight: 800 ">
-                                        @String.Format("{0:0.##}", (((Model.Comments.Sum(c => c.RoomRate) / Model.Comments.Count) + (Model.Comments.Sum(c => c.PricePerformanceRate) / Model.Comments.Count) + (Model.Comments.Sum(c => c.LocationRate) / Model.Comments.Count) + (Model.Comments.Sum(c => c.ServiceRate) / Model.Comments.Count) + (Model.Comments.Sum(c => c.FoodRate) / Model.Comments.Count) + (Model.Comments.Sum(c => c.GeneralRate) / Model.Comments.Count)) / 6))
+                                            @String.Format("{0:0.##}", (((Model.hotelInfo.Comments.Sum(c => c.RoomRate) / Model.hotelInfo.Comments.Count) + (Model.hotelInfo.Comments.Sum(c => c.PricePerformanceRate) / Model.hotelInfo.Comments.Count) + (Model.hotelInfo.Comments.Sum(c => c.LocationRate) / Model.hotelInfo.Comments.Count) + (Model.hotelInfo.Comments.Sum(c => c.ServiceRate) / Model.hotelInfo.Comments.Count) + (Model.hotelInfo.Comments.Sum(c => c.FoodRate) / Model.hotelInfo.Comments.Count) + (Model.hotelInfo.Comments.Sum(c => c.GeneralRate) / Model.hotelInfo.Comments.Count)) / 6))
                                         </div>
                                         <div class="d-flex justify-content-between align-items-center ml-2">
-                                            <b>@Resource.odapuan: </b><span class="mr-4">@(Model.Comments.Sum(c => c.RoomRate) / Model.Comments.Count)</span>
-                                            <b>@Resource.fiyatpuan: </b><span class="mr-4">@(Model.Comments.Sum(c => c.PricePerformanceRate) / Model.Comments.Count)</span>
-                                            <b>@Resource.konumpuan: </b><span class="mr-4">@(Model.Comments.Sum(c => c.LocationRate) / Model.Comments.Count)</span>
-                                            <b>@Resource.servispuan: </b><span class="mr-4">@(Model.Comments.Sum(c => c.ServiceRate) / Model.Comments.Count)</span>
-                                            <b>@Resource.yemekpuan: </b><span class="mr-4">@(Model.Comments.Sum(c => c.FoodRate) / Model.Comments.Count)</span>
-                                            <b>@Resource.genelpuan: </b><span class="mr-4">@(Model.Comments.Sum(c => c.GeneralRate) / Model.Comments.Count)</span>
+                                            <b>@Resource.odapuan: </b><span class="mr-4">@(Model.hotelInfo.Comments.Sum(c => c.RoomRate) / Model.hotelInfo.Comments.Count)</span>
+                                            <b>@Resource.fiyatpuan: </b><span class="mr-4">@(Model.hotelInfo.Comments.Sum(c => c.PricePerformanceRate) / Model.hotelInfo.Comments.Count)</span>
+                                            <b>@Resource.konumpuan: </b><span class="mr-4">@(Model.hotelInfo.Comments.Sum(c => c.LocationRate) / Model.hotelInfo.Comments.Count)</span>
+                                            <b>@Resource.servispuan: </b><span class="mr-4">@(Model.hotelInfo.Comments.Sum(c => c.ServiceRate) / Model.hotelInfo.Comments.Count)</span>
+                                            <b>@Resource.yemekpuan: </b><span class="mr-4">@(Model.hotelInfo.Comments.Sum(c => c.FoodRate) / Model.hotelInfo.Comments.Count)</span>
+                                            <b>@Resource.genelpuan: </b><span class="mr-4">@(Model.hotelInfo.Comments.Sum(c => c.GeneralRate) / Model.hotelInfo.Comments.Count)</span>
                                         </div>
                                     </div>
-                                    
-                                    
+
+
                                 </div>
-                                @foreach (var comment in Model.Comments)
+
+                                @foreach (var comment in Model.hotelInfo.Comments)
                                 {
                                     <div class="card mb-3">
                                         <div class="card-header">
@@ -122,7 +122,6 @@
                                                 <b>@Resource.servispuan: </b><span class="mr-2">@comment.ServiceRate</span>
                                                 <b>@Resource.yemekpuan: </b><span class="mr-2">@comment.FoodRate</span>
                                                 <b>@Resource.genelpuan: </b><span class="mr-2">@comment.GeneralRate</span>
-
                                             </span>
                                         </div>
                                         <div class="card-body">
@@ -138,13 +137,3 @@
         </div>
     </div>
 </section>
-
-<script>
-    function FncReservation(hotelId, roomId, adult, children) {
-        var startDate = document.getElementById('StartroomId_' + roomId).value;
-        var endDate = document.getElementById('EndroomId_' + roomId).value;
-        window.location = '/User/OdemeSayfasi?startDate=' + startDate + '&endDate=' + endDate + '&children=' + children + '&adults=' + adult + "&hotelID=" + hotelId + '&roomID=' + roomId ;
-    }
-</script>
-
-

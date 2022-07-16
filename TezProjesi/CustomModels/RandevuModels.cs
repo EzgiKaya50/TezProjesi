@@ -13,5 +13,11 @@ namespace TezProjesi.CustomModels
         public int userId { get; set; }
         public int roomId{ get; set; }
         public string comment { get; set; }
+        public float generalRate { get; set; }
+        public float foodRate { get; set; }
+        public float locationRate { get; set; }
+        public float serviceRate { get; set; }
+        public float pricePerformanceRate { get; set; }
+        public float roomRate { get; set; }
     }
 }

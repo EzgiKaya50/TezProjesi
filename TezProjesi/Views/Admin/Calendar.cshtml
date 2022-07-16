@@ -44,7 +44,7 @@
                                             <td>@checkin.Startdate.Value.ToShortDateString() - @checkin.Enddate.Value.ToShortDateString()</td>
                                             <td class="text-center">
                                                 <a title="Check-in" href="@Url.Action("Checkin","Admin",new {reservationId = checkin.Id  })" class="text-success">
-                                                    <i class="fas fa-pen"></i>
+                                                    <i class="fas fa-sign-in-alt"></i>
                                                 </a>
                                             </td>
                                         </tr>
@@ -83,7 +83,7 @@
                                             <td>@checkin.Startdate.Value.ToShortDateString() - @checkin.Enddate.Value.ToShortDateString()</td>
                                             <td class="text-center">
                                                 <a title="Check-out" href="@Url.Action("Checkout","Admin",new {reservationId = checkin.Id  })" class="text-success">
-                                                    <i class="fas fa-pen"></i>
+                                                    <i class="fas fa-sign-out-alt"></i>
                                                 </a>
                                             </td>
                                         </tr>

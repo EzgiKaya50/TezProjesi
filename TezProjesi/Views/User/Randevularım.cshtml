@@ -24,10 +24,9 @@
                         <input type="hidden" asp-for="roomId" value="@reservation.RoomId" />
                         <input type="hidden" asp-for="userId" value="@reservation.UserId" />
                         <div class="blog_left_sidebar">
-                            <article class="row blog_item">
-                                <div class="col-md-3">
+                            <article class="row blog_item mt-5">
+                                <div class="col-md-3 mt-5">
                                     <div class="blog_info text-right">
-
                                         <ul class="blog_meta list_style">
                                             <li><a href="#">@reservation.Room.Title<i class="lnr lnr-home"></i></a></li>
                                             <li><a href="#">@reservation.Total ₺</a></li>
@@ -36,7 +35,7 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="col-md-9">
+                                <div class="col-md-9 mt-5">
                                     <div class="blog_post">
                                         <img src="image/blog/main-blog/m-blog-1.jpg" alt="">
                                         <div class="blog_details">
@@ -47,11 +46,157 @@
                                             <div class="col-12" style="max-height:400px !important;">
                                                 @if (reservation.Checkout == true)
                                                 {
-                                                    <textarea asp-for="comment" id="comment_@i"></textarea>
+                                                    <div class="col-12 mt-3">
+                                                        <label><strong>@Resource.genelpuan: </strong></label>
+                                                        <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
+                                                            <label class="btn btn-outline-primary" for="btnradio1">
+                                                                <input asp-for="generalRate" type="radio" class="btn-check" id="btnradio1" autocomplete="off" value=1 required> 1
+                                                            </label>
+                                                            <label class="btn btn-outline-primary" for="btnradio2">
+                                                                <input asp-for="generalRate" type="radio" class="btn-check" id="btnradio2" autocomplete="off" value=2 required>
+                                                                2
+                                                            </label>
+                                                            <label class="btn btn-outline-primary" for="btnradio3">
+                                                                <input asp-for="generalRate" type="radio" class="btn-check" id="btnradio3" autocomplete="off" value=3 required>
+                                                                3
+                                                            </label>
+                                                            <label class="btn btn-outline-primary" for="btnradio4">
+                                                                <input asp-for="generalRate" type="radio" class="btn-check" id="btnradio4" autocomplete="off" value=4 required>
+                                                                4
+                                                            </label>
+                                                            <label class="btn btn-outline-primary" for="btnradio5">
+                                                                <input asp-for="generalRate" type="radio" class="btn-check" id="btnradio5" autocomplete="off" value=5 required>
+                                                                5
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 mt-3">
+                                                        <label><strong>@Resource.servispuan : </strong> </label>
+                                                        <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
+                                                            <label class="btn btn-outline-primary" for="btnradio1">
+                                                                <input asp-for="serviceRate" type="radio" class="btn-check" id="btnradio1" autocomplete="off" value=1 required> 1
+                                                            </label>
+                                                            <label class="btn btn-outline-primary" for="btnradio2">
+                                                                <input asp-for="serviceRate" type="radio" class="btn-check" id="btnradio2" autocomplete="off" value=2 required>
+                                                                2
+                                                            </label>
+                                                            <label class="btn btn-outline-primary" for="btnradio3">
+                                                                <input asp-for="serviceRate" type="radio" class="btn-check" id="btnradio3" autocomplete="off" value=3 required>
+                                                                3
+                                                            </label>
+                                                            <label class="btn btn-outline-primary" for="btnradio4">
+                                                                <input asp-for="serviceRate" type="radio" class="btn-check" id="btnradio4" autocomplete="off" value=4 required>
+                                                                4
+                                                            </label>
+                                                            <label class="btn btn-outline-primary" for="btnradio5">
+                                                                <input asp-for="serviceRate" type="radio" class="btn-check" id="btnradio5" autocomplete="off" value=5 required>
+                                                                5
+                                                            </label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12 mt-3">
+
+
+                                                        <label><strong>@Resource.yemekpuan :</strong> </label>
+                                                        <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
+                                                            <label class="btn btn-outline-primary" for="btnradio1">
+                                                                <input asp-for="foodRate" type="radio" class="btn-check" id="btnradio1" autocomplete="off" value=1 required> 1
+                                                            </label>
+                                                            <label class="btn btn-outline-primary" for="btnradio2">
+                                                                <input asp-for="foodRate" type="radio" class="btn-check" id="btnradio2" autocomplete="off" value=2 required>
+                                                                2
+                                                            </label>
+                                                            <label class="btn btn-outline-primary" for="btnradio3">
+                                                                <input asp-for="foodRate" type="radio" class="btn-check" id="btnradio3" autocomplete="off" value=3 required>
+                                                                3
+                                                            </label>
+                                                            <label class="btn btn-outline-primary" for="btnradio4">
+                                                                <input asp-for="foodRate" type="radio" class="btn-check" id="btnradio4" autocomplete="off" value=4 required>
+                                                                4
+                                                            </label>
+                                                            <label class="btn btn-outline-primary" for="btnradio5">
+                                                                <input asp-for="foodRate" type="radio" class="btn-check" id="btnradio5" autocomplete="off" value=5 required>
+                                                                5
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 mt-3">
+
+                                                        <label><strong>@Resource.konumpuan :</strong> </label>
+                                                        <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
+                                                            <label class="btn btn-outline-primary" for="btnradio1">
+                                                                <input asp-for="locationRate" type="radio" class="btn-check" id="btnradio1" autocomplete="off" value=1 required> 1
+                                                            </label>
+                                                            <label class="btn btn-outline-primary" for="btnradio2">
+                                                                <input asp-for="locationRate" type="radio" class="btn-check" id="btnradio2" autocomplete="off" value=2 required>
+                                                                2
+                                                            </label>
+                                                            <label class="btn btn-outline-primary" for="btnradio3">
+                                                                <input asp-for="locationRate" type="radio" class="btn-check" id="btnradio3" autocomplete="off" value=3 required>
+                                                                3
+                                                            </label>
+                                                            <label class="btn btn-outline-primary" for="btnradio4">
+                                                                <input asp-for="locationRate" type="radio" class="btn-check" id="btnradio4" autocomplete="off" value=4 required>
+                                                                4
+                                                            </label>
+                                                            <label class="btn btn-outline-primary" for="btnradio5">
+                                                                <input asp-for="locationRate" type="radio" class="btn-check" id="btnradio5" autocomplete="off" value=5 required>
+                                                                5
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 mt-3">
+
+                                                        <label><strong>@Resource.fiyatpuan :</strong> </label>
+                                                        <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
+                                                            <label class="btn btn-outline-primary" for="btnradio1">
+                                                                <input asp-for="pricePerformanceRate" type="radio" class="btn-check" id="btnradio1" autocomplete="off" value=1 required> 1
+                                                            </label>
+                                                            <label class="btn btn-outline-primary" for="btnradio2">
+                                                                <input asp-for="pricePerformanceRate" type="radio" class="btn-check" id="btnradio2" autocomplete="off" value=2 required>
+                                                                2
+                                                            </label>
+                                                            <label class="btn btn-outline-primary" for="btnradio3">
+                                                                <input asp-for="pricePerformanceRate" type="radio" class="btn-check" id="btnradio3" autocomplete="off" value=3 required>
+                                                                3
+                                                            </label>
+                                                            <label class="btn btn-outline-primary" for="btnradio4">
+                                                                <input asp-for="pricePerformanceRate" type="radio" class="btn-check" id="btnradio4" autocomplete="off" value=4 required>
+                                                                4
+                                                            </label>
+                                                            <label class="btn btn-outline-primary" for="btnradio5">
+                                                                <input asp-for="pricePerformanceRate" type="radio" class="btn-check" id="btnradio5" autocomplete="off" value=5 required>
+                                                                5
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 mt-3">
+                                                        <label><strong>@Resource.odapuan : </strong> </label>
+                                                        <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
+                                                            <label class="btn btn-outline-primary" for="btnradio1">
+                                                                <input asp-for="roomRate" type="radio" class="btn-check" id="btnradio1" autocomplete="off" value=1 required> 1
+                                                            </label>
+                                                            <label class="btn btn-outline-primary" for="btnradio2">
+                                                                <input asp-for="roomRate" type="radio" class="btn-check" id="btnradio2" autocomplete="off" value=2 required>
+                                                                2
+                                                            </label>
+                                                            <label class="btn btn-outline-primary" for="btnradio3">
+                                                                <input asp-for="roomRate" type="radio" class="btn-check" id="btnradio3" autocomplete="off" value=3 required>
+                                                                3
+                                                            </label>
+                                                            <label class="btn btn-outline-primary" for="btnradio4">
+                                                                <input asp-for="roomRate" type="radio" class="btn-check" id="btnradio4" autocomplete="off" value=4 required>
+                                                                4
+                                                            </label>
+                                                            <label class="btn btn-outline-primary" for="btnradio5">
+                                                                <input asp-for="roomRate" type="radio" class="btn-check" id="btnradio5" autocomplete="off" value=5 required>
+                                                                5
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <textarea asp-for="comment" id="comment_@i" class="form-control mt-3" style="min-height:150px"></textarea>
                                                     <button type="submit" class="view_btn btn-block button_hover"><h4 class="sec_h4">@Resource.yorumyap</h4></button>
-                                                    <script>
-                                                     CKEDITOR.replace("comment_@i");
-                                                    </script>
                                                 }
                                             </div>
                                             <div class="col-12">

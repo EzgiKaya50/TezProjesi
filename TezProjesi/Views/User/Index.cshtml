@@ -47,7 +47,7 @@
                                 <div class="col-md-4">
                                     <div class="book_tabel_item">
                                         <div class="input-group">
-                                            <select class="form-control" required asp-for="reservation.HotelID" asp-items="@new SelectList(Model.HotelList, nameof(Hotel.Id), nameof(Hotel.Title))">
+                                            <select class="form-control" required asp-for="reservation.CategoryID" asp-items="@new SelectList(Model.CategoryList, nameof(Category.Id), nameof(Category.Title))">
                                                 <option disabled selected>@Resource.seciniz</option>
                                             </select>
                                         </div>

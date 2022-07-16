@@ -30,8 +30,8 @@ namespace TezProjesi.Controllers
         {
             HomePageModels model = new HomePageModels();
             model.FaqList = _context.Faq.Where(c => c.Status == true).ToList();
-            model.HotelList = _context.Hotel.Where(c => c.Status == true).ToList();
             model.CommentList = _context.Comments.Where(c => c.Status == true).Include(c => c.Hotel).Include(c => c.User).ToList();
+            model.CategoryList = _context.Category.Where(c => c.Status == true).ToList();
             model.RoomList = _context.Room.Where(c => c.Status == true).ToList();
             model.RandomList = _context.Hotel.Where(c => c.Status == true && c.Image.Count > 0).Include(c => c.Image).OrderBy(c => Guid.NewGuid()).Take(4).ToList();
             if (HttpContext.User.Identity.IsAuthenticated == true)
@@ -74,13 +74,13 @@ namespace TezProjesi.Controllers
         //}
         public ActionResult Oteller()
         {
-            List<Hotel> HotelList = _context.Hotel.Where(c => c.Status == true).Include(c => c.Image).ToList();
+            List<Hotel> HotelList = _context.Hotel.Where(c => c.Status == true && c.Image.Count > 0).Include(c => c.Image).ToList();
 
             return View(HotelList);
         }
         public ActionResult OtelDetay(int hotelId)
         {
-            Hotel model = _context.Hotel.Where(c => c.Id == hotelId && c.Status == true).Include(x => x.Room).ThenInclude(c => c.RoomImages).FirstOrDefault();
+            Hotel model = _context.Hotel.Where(c => c.Id == hotelId && c.Status == true).Include(c => c.Image).Include(x => x.Room).ThenInclude(c => c.RoomImages).Include(c => c.Comments).ThenInclude(c => c.User).FirstOrDefault();
 
             return View(model);
         }
@@ -125,6 +125,11 @@ namespace TezProjesi.Controllers
             var userID = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value;
 
             RandevuModels model = new RandevuModels();
+            model.generalRate = 1;
+            model.foodRate = 1;
+            model.locationRate = 1;
+            model.pricePerformanceRate = 1;
+            model.serviceRate = 1;
             model.Reservations = _context.Reservation.Where(c => c.Status == true && c.UserId == Convert.ToInt32(userID)).Include(c => c.Hotel).ThenInclude(c => c.Image).Include(c => c.Room).ToList();
             return View(model);
         }
@@ -172,15 +177,16 @@ namespace TezProjesi.Controllers
                 var userName = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
                 var userID = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value;
 
-                model.RoomList = _context.Room.Where(c => c.HotelId == model.reservation.HotelID && c.Adult == model.reservation.adults && c.Children == model.reservation.children && c.Status == true).Include(c => c.RoomImages).ToList();
-                var existReservation = _context.Reservation.Where(c => c.HotelId == model.reservation.HotelID && (c.Startdate >= model.reservation.startdate && c.Enddate <= model.reservation.startdate)).ToList();
-                foreach (var room in existReservation)
-                {
-                    if (model.RoomList.Select(c => c.Id).Contains((int)room.RoomId))
-                    {
-                        model.RoomList.Remove(model.RoomList.FirstOrDefault(c => c.Id == room.RoomId));
-                    }
-                }
+                //model.RoomList = _context.Room.Where(c => c.HotelId == model.reservation.HotelID && c.Adult == model.reservation.adults && c.Children == model.reservation.children && c.Status == true).Include(c => c.RoomImages).ToList();
+                //var existReservation = _context.Reservation.Where(c => c.HotelId == model.reservation.HotelID && (c.Startdate >= model.reservation.startdate && c.Enddate <= model.reservation.startdate)).ToList();
+                //foreach (var room in existReservation)
+                //{
+                //    if (model.RoomList.Select(c => c.Id).Contains((int)room.RoomId))
+                //    {
+                //        model.RoomList.Remove(model.RoomList.FirstOrDefault(c => c.Id == room.RoomId));
+                //    }
+                //}
+                model.HotelList = _context.Hotel.Where(c => c.CategoryId == model.reservation.CategoryID && c.Image.Count() > 0).Include(c => c.Image).Include(c => c.Room).ToList();
                 return View(model);
             }
             else
@@ -203,12 +209,17 @@ namespace TezProjesi.Controllers
                 HotelId = model.hotelId,
                 UserId = model.userId,
                 UserComment = model.comment,
+                FoodRate = model.foodRate,
+                GeneralRate = model.generalRate,
+                LocationRate = model.locationRate,
+                PricePerformanceRate = model.pricePerformanceRate,
+                RoomRate = model.roomRate,
+                ServiceRate = model.serviceRate,
             };
             _context.Comments.Add(comment);
             _context.SaveChanges();
             return RedirectToAction("Randevularım", "User");
         }
-
         public ActionResult RezervasyonDetay(int hotelId, int roomId)
         {
             if (HttpContext.User.Identity.IsAuthenticated)
@@ -226,7 +237,6 @@ namespace TezProjesi.Controllers
                 return RedirectToAction("UserLogin", "Giris");
             }
         }
-
         public async Task<ActionResult> ProfilGuncelleKaydet(ProfilModels model)
         {
             var claimsIdentity = HttpContext.User.Identity as ClaimsIdentity;
@@ -268,7 +278,6 @@ namespace TezProjesi.Controllers
             _context.SaveChanges();
             return RedirectToAction("Profil", "User");
         }
-
         public ActionResult SaveReservation(Payment model)
         {
             if (HttpContext.User.Identity.IsAuthenticated)
@@ -300,19 +309,18 @@ namespace TezProjesi.Controllers
                     UpdatedAt = DateTime.Now,
                     UserId = Convert.ToInt32(userID),
                     Phone = user.Phone,
-                    Total = room.Price * (model.endDate - model.startDate).Days+1,
+                    Total = room.Price * (model.endDate - model.startDate).Days + 1,
                 };
                 _context.Reservation.Add(reservation);
                 _context.SaveChanges();
 
-                return RedirectToAction("Randevularım","User");
+                return RedirectToAction("Randevularım", "User");
             }
             else
             {
-                return RedirectToAction("UserLogin","Giris");
+                return RedirectToAction("UserLogin", "Giris");
             }
         }
-
         public IActionResult change_language(string returnUrl, string culture)
         {
             ClaimsIdentity claimsIdentity = HttpContext.User.Identity as ClaimsIdentity;
@@ -329,7 +337,6 @@ namespace TezProjesi.Controllers
 
             return LocalRedirect(returnUrl);
         }
-
         public ActionResult OdemeSayfasi(DateTime startDate, DateTime endDate, int children, int adults, int hotelID, int roomID)
         {
             if (HttpContext.User.Identity.IsAuthenticated)
@@ -348,8 +355,46 @@ namespace TezProjesi.Controllers
                     hotelName = _context.Hotel.FirstOrDefault(c => c.Id == hotelID).Title,
                     roomID = roomID,
                     roomName = _context.Room.FirstOrDefault(c => c.Id == roomID).Title,
-                    totalPrice = (double)_context.Room.FirstOrDefault(c => c.Id == roomID).Price * ((endDate - startDate).Days+1),
+                    totalPrice = (double)_context.Room.FirstOrDefault(c => c.Id == roomID).Price * ((endDate - startDate).Days + 1),
                 };
+                return View(model);
+            }
+            else
+            {
+                return RedirectToAction("UserLogin", "Giris");
+            }
+        }
+        public ActionResult OdaAra(DateTime startDate, DateTime endDate, int children, int adults, int hotelID)
+        {
+            if (HttpContext.User.Identity.IsAuthenticated)
+            {
+
+                var claimsIdentity = HttpContext.User.Identity as ClaimsIdentity;
+                var userName = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.Name).FirstOrDefault().Value;
+                var userID = claimsIdentity.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value;
+
+                HomePageModels model = new HomePageModels
+                {
+                    reservation = new ReservationCRUD()
+                    {
+                        adults = adults,
+                        children = children,
+                        enddate = endDate,
+                        HotelID = hotelID,
+                        startdate = startDate,
+                    }
+                };
+
+                model.RoomList = _context.Room.Where(c => c.HotelId == model.reservation.HotelID && c.Adult == model.reservation.adults && c.Children == model.reservation.children && c.Status == true).Include(c => c.RoomImages).ToList();
+                model.hotelInfo = _context.Hotel.Where(c => c.Id == hotelID).Include(c => c.Comments).ThenInclude(c => c.User).Include(c => c.Image).FirstOrDefault();
+                var existReservation = _context.Reservation.Where(c => c.HotelId == model.reservation.HotelID && (c.Startdate >= model.reservation.startdate && c.Enddate <= model.reservation.startdate)).ToList();
+                foreach (var room in existReservation)
+                {
+                    if (model.RoomList.Select(c => c.Id).Contains((int)room.RoomId))
+                    {
+                        model.RoomList.Remove(model.RoomList.FirstOrDefault(c => c.Id == room.RoomId));
+                    }
+                }
                 return View(model);
             }
             else

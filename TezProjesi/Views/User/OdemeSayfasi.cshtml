@@ -1,4 +1,5 @@
 ﻿@model TezProjesi.CustomModels.HotelModels.Payment
+@using TezProjesi.Resources
 @{
     ViewData["Title"] = "Ödeme Sayfası";
     Layout = "~/Views/Shared/_Layout_user.cshtml";
@@ -12,12 +13,12 @@
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered">
                             <tr>
-                                <th>Otel</th>
-                                <th>Oda</th>
-                                <th>Yetişkin</th>
-                                <th>Çocuk</th>
-                                <th>Tarih</th>
-                                <th>Toplam Fiyat</th>
+                                <th>@Resource.otel</th>
+                                <th>@Resource.oda</th>
+                                <th>@Resource.yetiskin</th>
+                                <th>@Resource.cocuk</th>
+                                <th>@Resource.tarih</th>
+                                <th>@Resource.toplamfiyat</th>
                             </tr>
                             <tr>
                                 <td>@Model.hotelName</td>
@@ -40,19 +41,19 @@
                         <input type="hidden" asp-for="children" />
                         <input type="hidden" asp-for="startDate" />
                         <input type="hidden" asp-for="endDate" />
-                        <label for="">Kartın Üzerindeki Ad Soyad</label>
-                        <input type="text" asp-for="cardNameSurname" class="form-control mb-2" placeholder="Kartın Üzerindeki Ad Soyad" />
-                        <label for="">Kart Numarası</label>
-                        <input type="tel" asp-for="cardNo" class="form-control mb-2" placeholder="Kart Numarası" maxlength="18" />
+                        <label for="">@Resource.kartınuzerindekiad</label>
+                        <input type="text" asp-for="cardNameSurname" class="form-control mb-2" placeholder="@Resource.kartınuzerindekiad" />
+                        <label for="">@Resource.kartnumarası</label>
+                        <input type="tel" asp-for="cardNo" class="form-control mb-2" placeholder="@Resource.kartnumarası" maxlength="18" />
 
                         <div class="row mb-2">
                             <div class="col-md-4">
-                                <label for="">Ay</label>
-                                <input type="tel" asp-for="cardMonth" class="form-control" maxlength="2" placeholder="Ay" />
+                                <label for="">@Resource.ay</label>
+                                <input type="tel" asp-for="cardMonth" class="form-control" maxlength="2" placeholder="@Resource.ay" />
                             </div>
                             <div class="col-md-4">
-                                <label for="">Yıl</label>
-                                <input type="tel" asp-for="cardYear" class="form-control" maxlength="2" placeholder="Yıl" />
+                                <label for="">@Resource.yıl</label>
+                                <input type="tel" asp-for="cardYear" class="form-control" maxlength="2" placeholder="@Resource.yıl" />
                             </div>
                             <div class="col-md-4">
                                 <label for="">CVV2</label>
@@ -60,7 +61,7 @@
                             </div>
 
                         </div>
-                        <button class="book_now_btn button_hover mt-3" type="submit">Ödeme Yap</button>
+                        <button class="book_now_btn button_hover mt-3" type="submit">@Resource.odemeyap</button>
                     }
                 </div>
             </div>

@@ -11,7 +11,12 @@ namespace TezProjesi.Models
     {
         public int Id { get; set; }
         public string UserComment { get; set; }
-        public double? Rate { get; set; }
+        public double? FoodRate { get; set; }
+        public double? ServiceRate { get; set; }
+        public double? RoomRate { get; set; }
+        public double? GeneralRate { get; set; }
+        public double? PricePerformanceRate { get; set; }
+        public double? LocationRate { get; set; }
         public int? HotelId { get; set; }
         public int? UserId { get; set; }
         public int? Ip { get; set; }

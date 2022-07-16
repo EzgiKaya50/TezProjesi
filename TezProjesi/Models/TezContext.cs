@@ -84,11 +84,21 @@ namespace TezProjesi.Models
                     .HasColumnName("created_at")
                     .HasColumnType("datetime");
 
+                entity.Property(e => e.FoodRate).HasColumnName("foodRate");
+
+                entity.Property(e => e.GeneralRate).HasColumnName("generalRate");
+
                 entity.Property(e => e.HotelId).HasColumnName("hotel_id");
 
                 entity.Property(e => e.Ip).HasColumnName("ip");
 
-                entity.Property(e => e.Rate).HasColumnName("rate");
+                entity.Property(e => e.LocationRate).HasColumnName("locationRate");
+
+                entity.Property(e => e.PricePerformanceRate).HasColumnName("pricePerformanceRate");
+
+                entity.Property(e => e.RoomRate).HasColumnName("roomRate");
+
+                entity.Property(e => e.ServiceRate).HasColumnName("serviceRate");
 
                 entity.Property(e => e.Status).HasColumnName("status");
 

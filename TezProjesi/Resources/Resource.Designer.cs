@@ -88,6 +88,15 @@ namespace TezProjesi.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ay.
+        /// </summary>
+        public static string ay {
+            get {
+                return ResourceManager.GetString("ay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Çıkış Tarihi.
         /// </summary>
         public static string cıkıstarihi {
@@ -102,6 +111,15 @@ namespace TezProjesi.Resources {
         public static string cıkısyap {
             get {
                 return ResourceManager.GetString("cıkısyap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Çocuk.
+        /// </summary>
+        public static string cocuk {
+            get {
+                return ResourceManager.GetString("cocuk", resourceCulture);
             }
         }
         
@@ -129,6 +147,42 @@ namespace TezProjesi.Resources {
         public static string email {
             get {
                 return ResourceManager.GetString("email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fiyat Aralığı.
+        /// </summary>
+        public static string fiyataralıgı {
+            get {
+                return ResourceManager.GetString("fiyataralıgı", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fiyat/Performans Puanı.
+        /// </summary>
+        public static string fiyatpuan {
+            get {
+                return ResourceManager.GetString("fiyatpuan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gecelik Fiyat.
+        /// </summary>
+        public static string gecelikfiyat {
+            get {
+                return ResourceManager.GetString("gecelikfiyat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Genel Puanı.
+        /// </summary>
+        public static string genelpuan {
+            get {
+                return ResourceManager.GetString("genelpuan", resourceCulture);
             }
         }
         
@@ -187,6 +241,24 @@ namespace TezProjesi.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kartın Üzerindeki Ad.
+        /// </summary>
+        public static string kartınuzerindekiad {
+            get {
+                return ResourceManager.GetString("kartınuzerindekiad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kart Numarası.
+        /// </summary>
+        public static string kartnumarası {
+            get {
+                return ResourceManager.GetString("kartnumarası", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kaydet.
         /// </summary>
         public static string kaydet {
@@ -201,6 +273,51 @@ namespace TezProjesi.Resources {
         public static string kaydol {
             get {
                 return ResourceManager.GetString("kaydol", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Konum Puanı.
+        /// </summary>
+        public static string konumpuan {
+            get {
+                return ResourceManager.GetString("konumpuan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oda.
+        /// </summary>
+        public static string oda {
+            get {
+                return ResourceManager.GetString("oda", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oda Ara.
+        /// </summary>
+        public static string odaara {
+            get {
+                return ResourceManager.GetString("odaara", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oda Puanı.
+        /// </summary>
+        public static string odapuan {
+            get {
+                return ResourceManager.GetString("odapuan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ödeme Yap.
+        /// </summary>
+        public static string odemeyap {
+            get {
+                return ResourceManager.GetString("odemeyap", resourceCulture);
             }
         }
         
@@ -277,6 +394,15 @@ namespace TezProjesi.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Servis Puanı.
+        /// </summary>
+        public static string servispuan {
+            get {
+                return ResourceManager.GetString("servispuan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Şifre.
         /// </summary>
         public static string sifre {
@@ -304,6 +430,15 @@ namespace TezProjesi.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tarih.
+        /// </summary>
+        public static string tarih {
+            get {
+                return ResourceManager.GetString("tarih", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Telefon.
         /// </summary>
         public static string telefon {
@@ -313,11 +448,56 @@ namespace TezProjesi.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Toplam Fiyat.
+        /// </summary>
+        public static string toplamfiyat {
+            get {
+                return ResourceManager.GetString("toplamfiyat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yemek Puanı.
+        /// </summary>
+        public static string yemekpuan {
+            get {
+                return ResourceManager.GetString("yemekpuan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yetişkin.
+        /// </summary>
+        public static string yetiskin {
+            get {
+                return ResourceManager.GetString("yetiskin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Yetişkin Sayısı.
         /// </summary>
         public static string yetiskinsayisi {
             get {
                 return ResourceManager.GetString("yetiskinsayisi", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yıl.
+        /// </summary>
+        public static string yıl {
+            get {
+                return ResourceManager.GetString("yıl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yorumlar.
+        /// </summary>
+        public static string yorum {
+            get {
+                return ResourceManager.GetString("yorum", resourceCulture);
             }
         }
         

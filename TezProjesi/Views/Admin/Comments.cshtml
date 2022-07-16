@@ -12,7 +12,6 @@
                 <th scope="col">Yorum</th>
                 <th scope="col">Otel</th>
                 <th scope="col">Kullanıcı</th>
-                <th scope="col">Puan</th>
             </tr>
         </thead>
         @{ var cardIndx = 0; }
@@ -26,7 +25,6 @@
                     <td>@Html.Raw(Comment.UserComment)</td>
                     <td>@Comment.HotelId</td>
                     <td>@Comment.UserId</td>
-                    <td>@Comment.Rate</td>
                 </tr>
             }
         </tbody>

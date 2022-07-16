@@ -126,6 +126,12 @@
   <data name="ara" xml:space="preserve">
     <value>Ara</value>
   </data>
+  <data name="ay" xml:space="preserve">
+    <value>Ay</value>
+  </data>
+  <data name="cocuk" xml:space="preserve">
+    <value>Çocuk</value>
+  </data>
   <data name="cocuksayisi" xml:space="preserve">
     <value>Çocuk Sayısı</value>
   </data>
@@ -140,6 +146,18 @@
   </data>
   <data name="email" xml:space="preserve">
     <value>E-Mail</value>
+  </data>
+  <data name="fiyataralıgı" xml:space="preserve">
+    <value>Fiyat Aralığı</value>
+  </data>
+  <data name="fiyatpuan" xml:space="preserve">
+    <value>Fiyat/Performans Puanı</value>
+  </data>
+  <data name="gecelikfiyat" xml:space="preserve">
+    <value>Gecelik Fiyat</value>
+  </data>
+  <data name="genelpuan" xml:space="preserve">
+    <value>Genel Puanı</value>
   </data>
   <data name="giristarihi" xml:space="preserve">
     <value>Giriş Tarihi</value>
@@ -159,11 +177,32 @@
   <data name="isim" xml:space="preserve">
     <value>İsim</value>
   </data>
+  <data name="kartnumarası" xml:space="preserve">
+    <value>Kart Numarası</value>
+  </data>
+  <data name="kartınuzerindekiad" xml:space="preserve">
+    <value>Kartın Üzerindeki Ad</value>
+  </data>
   <data name="kaydet" xml:space="preserve">
     <value>Kaydet</value>
   </data>
   <data name="kaydol" xml:space="preserve">
     <value>Kaydol</value>
+  </data>
+  <data name="konumpuan" xml:space="preserve">
+    <value>Konum Puanı</value>
+  </data>
+  <data name="oda" xml:space="preserve">
+    <value>Oda</value>
+  </data>
+  <data name="odaara" xml:space="preserve">
+    <value>Oda Ara</value>
+  </data>
+  <data name="odapuan" xml:space="preserve">
+    <value>Oda Puanı</value>
+  </data>
+  <data name="odemeyap" xml:space="preserve">
+    <value>Ödeme Yap</value>
   </data>
   <data name="onecikanoteller" xml:space="preserve">
     <value>Öne Çıkan Oteller</value>
@@ -189,6 +228,9 @@
   <data name="seciniz" xml:space="preserve">
     <value>Seçiniz..</value>
   </data>
+  <data name="servispuan" xml:space="preserve">
+    <value>Servis Puanı</value>
+  </data>
   <data name="sifre" xml:space="preserve">
     <value>Şifre</value>
   </data>
@@ -198,13 +240,31 @@
   <data name="soyad" xml:space="preserve">
     <value>Soyad</value>
   </data>
+  <data name="tarih" xml:space="preserve">
+    <value>Tarih</value>
+  </data>
   <data name="telefon" xml:space="preserve">
     <value>Telefon</value>
+  </data>
+  <data name="toplamfiyat" xml:space="preserve">
+    <value>Toplam Fiyat</value>
+  </data>
+  <data name="yemekpuan" xml:space="preserve">
+    <value>Yemek Puanı</value>
+  </data>
+  <data name="yetiskin" xml:space="preserve">
+    <value>Yetişkin</value>
   </data>
   <data name="yetiskinsayisi" xml:space="preserve">
     <value>Yetişkin Sayısı</value>
   </data>
+  <data name="yorum" xml:space="preserve">
+    <value>Yorumlar</value>
+  </data>
   <data name="yorumyap" xml:space="preserve">
     <value>Yorum Yap</value>
+  </data>
+  <data name="yıl" xml:space="preserve">
+    <value>Yıl</value>
   </data>
 </root>

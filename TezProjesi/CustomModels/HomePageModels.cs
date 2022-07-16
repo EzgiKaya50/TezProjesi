@@ -13,6 +13,8 @@ namespace TezProjesi.CustomModels
         public List<Room> RoomList { get; set; }
         public ReservationCRUD reservation { get; set; }
         public List<Hotel> RandomList { get; set; }
+        public List<Category> CategoryList { get; set; }
+        public Hotel hotelInfo { get; set; }
     }
     public class ReservationCRUD
     {
@@ -21,6 +23,8 @@ namespace TezProjesi.CustomModels
         public int HotelID { get; set; }
         public int? adults { get; set; }
         public int? children { get; set; }
+        public int CategoryID { get; set; }
+        public int RoomID { get; set; }
     }
     
 }
